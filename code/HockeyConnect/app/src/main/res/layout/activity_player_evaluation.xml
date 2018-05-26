@@ -19,24 +19,195 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme" />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/textViewPlayerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:gravity="center"
+                android:text="Player Name" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/textViewPlayerNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:gravity="center"
+                android:text="Player Number" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:id="@+id/textViewAttributeName0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Attribute 0" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <SeekBar
+                android:id="@+id/seekBar0"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:max="10"
+                android:progress="0" />
+
+            <TextView
+                android:id="@+id/textViewAttribute0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="NR" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:id="@+id/textViewAttributeName1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Attribute 1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <SeekBar
+                android:id="@+id/seekBar1"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:max="10"
+                android:progress="0" />
+
+            <TextView
+                android:id="@+id/textViewAttribute1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="NR" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:id="@+id/textViewAttributeName2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Attribute 2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <SeekBar
+                android:id="@+id/seekBar2"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:max="10"
+                android:progress="0" />
+
+            <TextView
+                android:id="@+id/textViewAttribute2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="NR" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:id="@+id/textViewAttributeName3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Attribute 3" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <SeekBar
+                android:id="@+id/seekBar3"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:max="10"
+                android:progress="0" />
+
+            <TextView
+                android:id="@+id/textViewAttribute3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="NR" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:id="@+id/textViewAttributeName4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Attribute 4" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <SeekBar
+                android:id="@+id/seekBar4"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:max="10"
+                android:progress="0" />
+
+            <TextView
+                android:id="@+id/textViewAttribute4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="NR" />
         </LinearLayout>
 
     </LinearLayout>
