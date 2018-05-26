@@ -5,6 +5,7 @@
     <string name="attribute2_name">Hockey Sense</string>
     <string name="attribute3_name">Hitting</string>
     <string name="attribute4_name">Leadership</string>
+    <string name="not_rated_name">NR</string>
 
     <string name="test_player_name_name">Bob Smith</string>
     <string name="test_player_number_name">23</string>

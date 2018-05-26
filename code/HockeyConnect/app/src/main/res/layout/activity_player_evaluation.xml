@@ -53,6 +53,7 @@
             android:id="@+id/textViewAttributeName0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:text="Attribute 0" />
 
         <LinearLayout
@@ -72,7 +73,7 @@
 
             <TextView
                 android:id="@+id/textViewAttribute0"
-                android:layout_width="wrap_content"
+                android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="NR" />
@@ -86,6 +87,7 @@
             android:id="@+id/textViewAttributeName1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:text="Attribute 1" />
 
         <LinearLayout
@@ -105,7 +107,7 @@
 
             <TextView
                 android:id="@+id/textViewAttribute1"
-                android:layout_width="wrap_content"
+                android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="NR" />
@@ -119,6 +121,7 @@
             android:id="@+id/textViewAttributeName2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:text="Attribute 2" />
 
         <LinearLayout
@@ -138,7 +141,7 @@
 
             <TextView
                 android:id="@+id/textViewAttribute2"
-                android:layout_width="wrap_content"
+                android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="NR" />
@@ -152,6 +155,7 @@
             android:id="@+id/textViewAttributeName3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:text="Attribute 3" />
 
         <LinearLayout
@@ -171,7 +175,7 @@
 
             <TextView
                 android:id="@+id/textViewAttribute3"
-                android:layout_width="wrap_content"
+                android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="NR" />
@@ -185,6 +189,7 @@
             android:id="@+id/textViewAttributeName4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:text="Attribute 4" />
 
         <LinearLayout
@@ -204,7 +209,7 @@
 
             <TextView
                 android:id="@+id/textViewAttribute4"
-                android:layout_width="wrap_content"
+                android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="NR" />
