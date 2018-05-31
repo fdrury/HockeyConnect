@@ -34,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:textSize="32dp"
                 android:text="Player Name" />
 
             <TextView
@@ -42,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:textSize="32dp"
                 android:text="Player Number" />
         </LinearLayout>
 
@@ -67,6 +69,8 @@
                 style="@style/Widget.AppCompat.SeekBar.Discrete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:thumbTint="@color/colorPrimary"
+                android:progressTint="@color/colorPrimary"
                 android:layout_weight="9"
                 android:max="10"
                 android:progress="0" />
@@ -101,6 +105,8 @@
                 style="@style/Widget.AppCompat.SeekBar.Discrete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:thumbTint="@color/colorPrimary"
+                android:progressTint="@color/colorPrimary"
                 android:layout_weight="9"
                 android:max="10"
                 android:progress="0" />
@@ -135,6 +141,8 @@
                 style="@style/Widget.AppCompat.SeekBar.Discrete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:thumbTint="@color/colorPrimary"
+                android:progressTint="@color/colorPrimary"
                 android:layout_weight="9"
                 android:max="10"
                 android:progress="0" />
@@ -169,6 +177,8 @@
                 style="@style/Widget.AppCompat.SeekBar.Discrete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:thumbTint="@color/colorPrimary"
+                android:progressTint="@color/colorPrimary"
                 android:layout_weight="9"
                 android:max="10"
                 android:progress="0" />
@@ -203,6 +213,8 @@
                 style="@style/Widget.AppCompat.SeekBar.Discrete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:thumbTint="@color/colorPrimary"
+                android:progressTint="@color/colorPrimary"
                 android:layout_weight="9"
                 android:max="10"
                 android:progress="0" />
@@ -213,6 +225,32 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="NR" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonCancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cancel" />
+
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@color/colorWhite"
+                android:text="Save" />
         </LinearLayout>
 
     </LinearLayout>
