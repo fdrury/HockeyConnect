@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">HockeyConnect</string>
-    <string name="attribute0_name">Agility</string>
-    <string name="attribute1_name">Puck Handling</string>
-    <string name="attribute2_name">Hockey Sense</string>
-    <string name="attribute3_name">Hitting</string>
-    <string name="attribute4_name">Leadership</string>
+    <string name="attribute0_name">Speed</string>
+    <string name="attribute1_name">Hockey Awareness</string>
+    <string name="attribute2_name">Compete Level</string>
+    <string name="attribute3_name">Puck Handling</string>
+    <string name="attribute4_name">Agility</string>
     <string name="not_rated_name">NR</string>
 
     <string name="test_player_name_name">Bob Smith</string>
