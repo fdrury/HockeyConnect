@@ -89,6 +89,7 @@
                 android:layout_height="wrap_content"
                 android:thumbTint="@color/colorPrimary"
                 android:progressTint="@color/colorPrimary"
+                android:background="@drawable/gradient"
                 android:layout_weight="9"
                 android:max="10"
                 android:progress="0" />
@@ -316,6 +317,17 @@
                 android:layout_weight="1"
                 android:text="NR" />
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <Button
+            android:id="@+id/timerButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="Time 50m Sprint" />
 
         <Space
             android:layout_width="match_parent"
