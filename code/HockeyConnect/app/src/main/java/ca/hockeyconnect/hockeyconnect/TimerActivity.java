@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class TimerActivity extends AppCompatActivity {
 
@@ -17,6 +19,15 @@ public class TimerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
+
+        ImageButton helpButton = (ImageButton)findViewById(R.id.helpButtonTimer);
+
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "The time that it takes a player to skate from one goal line to the other from a standstill", Toast.LENGTH_LONG).show();
+            }
+        });
 
         /*chronometer = (Chronometer)findViewById(R.id.chronometer);
 

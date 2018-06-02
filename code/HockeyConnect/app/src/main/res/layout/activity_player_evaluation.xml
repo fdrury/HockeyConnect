@@ -334,12 +334,31 @@
             android:layout_width="match_parent"
             android:layout_height="20dp" />
 
-        <Button
-            android:id="@+id/timerButton"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:text="Time 340' Sprint" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/timerButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Time 340' Sprint"
+                android:textAllCaps="false" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="26dp"
+                android:text="00:00.00" />
+        </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
