@@ -35,6 +35,7 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:textSize="32dp"
             android:text="340' Sprint" />
 
@@ -55,12 +56,12 @@
                 android:layout_marginRight="10dp"
                 app:srcCompat="@android:drawable/ic_lock_idle_alarm" />
 
-            <Chronometer
-                android:id="@+id/chronometer"
+            <TextView
+                android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="32dp"
-                android:layout_weight="1" />
+                android:text="00:00.00" />
 
         </LinearLayout>
 
@@ -73,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorGreen"
+            android:backgroundTint="@color/colorGreen"
             android:text="START" />
 
         <Space

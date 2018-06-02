@@ -18,7 +18,7 @@ public class TimerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
-        chronometer = (Chronometer)findViewById(R.id.chronometer);
+        /*chronometer = (Chronometer)findViewById(R.id.chronometer);
 
         chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
@@ -46,6 +46,6 @@ public class TimerActivity extends AppCompatActivity {
                     startStopButton.setBackgroundColor(startStopButton.getContext().getResources().getColor(R.color.colorRed));
                 }
             }
-        });
+        });*/
     }
 }

@@ -339,7 +339,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAllCaps="false"
-            android:text="Time 50m Sprint" />
+            android:text="Time 340' Sprint" />
 
         <Space
             android:layout_width="match_parent"
