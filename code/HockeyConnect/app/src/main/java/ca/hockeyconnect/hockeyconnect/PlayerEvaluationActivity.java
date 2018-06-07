@@ -35,11 +35,11 @@ public class PlayerEvaluationActivity extends AppCompatActivity {
         helpButtons[2] = (ImageButton)findViewById(R.id.helpButton2);
         helpButtons[3] = (ImageButton)findViewById(R.id.helpButton3);
         helpButtons[4] = (ImageButton)findViewById(R.id.helpButton4);
-        helpStrings[0] = "Speed: A player's skating speed relative to other players";
-        helpStrings[1] = "Hockey Awareness: A player's ability to assess plays and predict movements";
-        helpStrings[2] = "Compete Level: The extent to which a player battles with and competes against other players";
-        helpStrings[3] = "Puck Handling: A player's ability to hold onto, steal, and manipulate the puck";
-        helpStrings[4] = "Agility: The ability of a player to stop, do cross-overs, and change directions";
+        helpStrings[0] = "Speed: Speed/Explosiveness. How fast a player skates relative to other players";
+        helpStrings[1] = "Hockey Awareness/Instincts/Sense: Reads and reacts/anticipates where the puck os going A player's ability to assess plays and predict movements";
+        helpStrings[2] = "Compete Level: Work ethic, attacking the puck, strong with the puck, battles with other players";
+        helpStrings[3] = "Puck Handling: Stick work, stick handling, passing, seeing the ice with the puck.";
+        helpStrings[4] = "Agility: Pivoting, backwards to forwards and vice-versa, ability to stay on feet in crowded areas";
 
         TextView playerNameTextView = (TextView)findViewById(R.id.textViewPlayerName);
         TextView playerNumberTextView = (TextView)findViewById(R.id.textViewPlayerNumber);
