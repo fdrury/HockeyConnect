@@ -14,7 +14,11 @@ public class PlayerEvaluationActivity extends AppCompatActivity {
 
     SeekBar[] seekBars = new SeekBar[5];
     ImageButton[] helpButtons = new ImageButton[5];
+    TextView timerTextView;
     String[] helpStrings = new String[5];
+    int timerActivityRequestCode = 1234;
+    static final String timerValueRequestCode = "timer_value";
+    long timerMillisecondValue = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,7 @@ public class PlayerEvaluationActivity extends AppCompatActivity {
         TextView attribute2TextView = (TextView)findViewById(R.id.textViewAttributeName2);
         TextView attribute3TextView = (TextView)findViewById(R.id.textViewAttributeName3);
         TextView attribute4TextView = (TextView)findViewById(R.id.textViewAttributeName4);
+        timerTextView = (TextView)findViewById(R.id.timerTextView);
 
         final TextView[] attributeValueViews = {(TextView)findViewById(R.id.textViewAttribute0),
                 (TextView)findViewById(R.id.textViewAttribute1),
@@ -96,9 +101,24 @@ public class PlayerEvaluationActivity extends AppCompatActivity {
         timerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(PlayerEvaluationActivity.this, TimerActivity.class));
+                startActivityForResult(new Intent(PlayerEvaluationActivity.this, TimerActivity.class), timerActivityRequestCode);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == timerActivityRequestCode && resultCode == RESULT_OK && data != null) {
+            timerMillisecondValue = data.getLongExtra(timerValueRequestCode, 0);
+
+            int minutes = (int)(timerMillisecondValue / 1000 / 60);
+            int seconds = (int)(timerMillisecondValue / 1000 % 60);
+            int milliSeconds = (int)(timerMillisecondValue % 1000);
+
+            timerTextView.setText("" + minutes + ":"
+                    + String.format("%02d", seconds) + ":"
+                    + String.format("%03d", milliSeconds));
+        }
     }
 
 

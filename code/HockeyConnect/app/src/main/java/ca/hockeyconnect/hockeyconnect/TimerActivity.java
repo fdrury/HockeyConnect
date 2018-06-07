@@ -1,5 +1,6 @@
 package ca.hockeyconnect.hockeyconnect;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -61,6 +62,9 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO: send data back
+                Intent output = new Intent();
+                output.putExtra(PlayerEvaluationActivity.timerValueRequestCode, millisecondTime);
+                setResult(RESULT_OK, output);
                 finish();
             }
         });
