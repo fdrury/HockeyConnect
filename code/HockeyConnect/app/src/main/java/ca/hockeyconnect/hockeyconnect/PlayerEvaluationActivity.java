@@ -35,7 +35,7 @@ public class PlayerEvaluationActivity extends AppCompatActivity {
         helpButtons[2] = (ImageButton)findViewById(R.id.helpButton2);
         helpButtons[3] = (ImageButton)findViewById(R.id.helpButton3);
         helpButtons[4] = (ImageButton)findViewById(R.id.helpButton4);
-        helpStrings[0] = "Speed: Speed/Explosiveness. How fast a player skates relative to other players";
+        helpStrings[0] = "Speed/Explosiveness: How fast a player skates relative to other players";
         helpStrings[1] = "Hockey Awareness/Instincts/Sense: Reads and reacts/anticipates where the puck os going A player's ability to assess plays and predict movements";
         helpStrings[2] = "Compete Level: Work ethic, attacking the puck, strong with the puck, battles with other players";
         helpStrings[3] = "Puck Handling: Stick work, stick handling, passing, seeing the ice with the puck.";
