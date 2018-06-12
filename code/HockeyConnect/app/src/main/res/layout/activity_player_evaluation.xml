@@ -41,6 +41,7 @@
                 android:id="@+id/textViewPlayerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="32dp"
@@ -50,6 +51,7 @@
                 android:id="@+id/textViewPlayerNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="32dp"
@@ -69,6 +71,7 @@
                 android:id="@+id/textViewAttributeName0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
                 android:textSize="24dp"
                 android:layout_marginLeft="5dp"
                 android:text="Attribute 0" />
@@ -108,7 +111,8 @@
                 android:id="@+id/textViewAttribute0"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
-                android:textSize="24dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="36dp"
                 android:layout_weight="1"
                 android:text="NR" />
         </LinearLayout>
@@ -126,6 +130,7 @@
                 android:id="@+id/textViewAttributeName1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
                 android:textSize="24dp"
                 android:layout_marginLeft="5dp"
                 android:text="Attribute 0" />
@@ -165,7 +170,8 @@
                 android:id="@+id/textViewAttribute1"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
-                android:textSize="24dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="36dp"
                 android:layout_weight="1"
                 android:text="NR" />
         </LinearLayout>
@@ -183,6 +189,7 @@
                 android:id="@+id/textViewAttributeName2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
                 android:textSize="24dp"
                 android:layout_marginLeft="5dp"
                 android:text="Attribute 0" />
@@ -222,7 +229,8 @@
                 android:id="@+id/textViewAttribute2"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
-                android:textSize="24dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="36dp"
                 android:layout_weight="1"
                 android:text="NR" />
         </LinearLayout>
@@ -240,6 +248,7 @@
                 android:id="@+id/textViewAttributeName3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
                 android:textSize="24dp"
                 android:layout_marginLeft="5dp"
                 android:text="Attribute 0" />
@@ -279,7 +288,8 @@
                 android:id="@+id/textViewAttribute3"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
-                android:textSize="24dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="36dp"
                 android:layout_weight="1"
                 android:text="NR" />
         </LinearLayout>
@@ -297,6 +307,7 @@
                 android:id="@+id/textViewAttributeName4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
                 android:textSize="24dp"
                 android:layout_marginLeft="5dp"
                 android:text="Attribute 0" />
@@ -336,7 +347,8 @@
                 android:id="@+id/textViewAttribute4"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
-                android:textSize="24dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="36dp"
                 android:layout_weight="1"
                 android:text="NR" />
         </LinearLayout>
@@ -366,6 +378,7 @@
                 android:id="@+id/timerTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="26dp"
