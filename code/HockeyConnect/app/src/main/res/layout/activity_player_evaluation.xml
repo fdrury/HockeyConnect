@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     tools:context="ca.hockeyconnect.hockeyconnect.PlayerEvaluationActivity">
 
     <LinearLayout
@@ -68,6 +69,7 @@
                 android:id="@+id/textViewAttributeName0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="24dp"
                 android:layout_marginLeft="5dp"
                 android:text="Attribute 0" />
 
@@ -77,8 +79,8 @@
 
             <ImageButton
                 android:id="@+id/helpButton0"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:scaleType="fitCenter"
                 android:background="@color/colorTransparent"
                 app:srcCompat="@android:drawable/ic_menu_help" />
@@ -94,10 +96,10 @@
                 android:id="@+id/seekBar0"
                 style="@style/Widget.AppCompat.SeekBar.Discrete"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:thumbTint="@color/colorBlack"
                 android:progressTint="@color/colorBlack"
-                android:background="@drawable/evaluation_attribute_background_lighter"
+                android:background="@drawable/evaluation_attribute_background_grey"
                 android:layout_weight="9"
                 android:max="10"
                 android:progress="0" />
@@ -106,6 +108,7 @@
                 android:id="@+id/textViewAttribute0"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
+                android:textSize="24dp"
                 android:layout_weight="1"
                 android:text="NR" />
         </LinearLayout>
@@ -123,6 +126,7 @@
                 android:id="@+id/textViewAttributeName1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="24dp"
                 android:layout_marginLeft="5dp"
                 android:text="Attribute 0" />
 
@@ -132,8 +136,8 @@
 
             <ImageButton
                 android:id="@+id/helpButton1"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:scaleType="fitCenter"
                 android:background="@color/colorTransparent"
                 app:srcCompat="@android:drawable/ic_menu_help" />
@@ -149,10 +153,10 @@
                 android:id="@+id/seekBar1"
                 style="@style/Widget.AppCompat.SeekBar.Discrete"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:thumbTint="@color/colorBlack"
                 android:progressTint="@color/colorBlack"
-                android:background="@drawable/evaluation_attribute_background_lighter"
+                android:background="@drawable/evaluation_attribute_background_grey"
                 android:layout_weight="9"
                 android:max="10"
                 android:progress="0" />
@@ -161,6 +165,7 @@
                 android:id="@+id/textViewAttribute1"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
+                android:textSize="24dp"
                 android:layout_weight="1"
                 android:text="NR" />
         </LinearLayout>
@@ -178,6 +183,7 @@
                 android:id="@+id/textViewAttributeName2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="24dp"
                 android:layout_marginLeft="5dp"
                 android:text="Attribute 0" />
 
@@ -187,8 +193,8 @@
 
             <ImageButton
                 android:id="@+id/helpButton2"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:scaleType="fitCenter"
                 android:background="@color/colorTransparent"
                 app:srcCompat="@android:drawable/ic_menu_help" />
@@ -204,10 +210,10 @@
                 android:id="@+id/seekBar2"
                 style="@style/Widget.AppCompat.SeekBar.Discrete"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:thumbTint="@color/colorBlack"
                 android:progressTint="@color/colorBlack"
-                android:background="@drawable/evaluation_attribute_background_lighter"
+                android:background="@drawable/evaluation_attribute_background_grey"
                 android:layout_weight="9"
                 android:max="10"
                 android:progress="0" />
@@ -216,6 +222,7 @@
                 android:id="@+id/textViewAttribute2"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
+                android:textSize="24dp"
                 android:layout_weight="1"
                 android:text="NR" />
         </LinearLayout>
@@ -233,6 +240,7 @@
                 android:id="@+id/textViewAttributeName3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="24dp"
                 android:layout_marginLeft="5dp"
                 android:text="Attribute 0" />
 
@@ -242,8 +250,8 @@
 
             <ImageButton
                 android:id="@+id/helpButton3"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:scaleType="fitCenter"
                 android:background="@color/colorTransparent"
                 app:srcCompat="@android:drawable/ic_menu_help" />
@@ -259,10 +267,10 @@
                 android:id="@+id/seekBar3"
                 style="@style/Widget.AppCompat.SeekBar.Discrete"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:thumbTint="@color/colorBlack"
                 android:progressTint="@color/colorBlack"
-                android:background="@drawable/evaluation_attribute_background_lighter"
+                android:background="@drawable/evaluation_attribute_background_grey"
                 android:layout_weight="9"
                 android:max="10"
                 android:progress="0" />
@@ -271,6 +279,7 @@
                 android:id="@+id/textViewAttribute3"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
+                android:textSize="24dp"
                 android:layout_weight="1"
                 android:text="NR" />
         </LinearLayout>
@@ -288,6 +297,7 @@
                 android:id="@+id/textViewAttributeName4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="24dp"
                 android:layout_marginLeft="5dp"
                 android:text="Attribute 0" />
 
@@ -297,8 +307,8 @@
 
             <ImageButton
                 android:id="@+id/helpButton4"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:scaleType="fitCenter"
                 android:background="@color/colorTransparent"
                 app:srcCompat="@android:drawable/ic_menu_help" />
@@ -314,10 +324,10 @@
                 android:id="@+id/seekBar4"
                 style="@style/Widget.AppCompat.SeekBar.Discrete"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:thumbTint="@color/colorBlack"
                 android:progressTint="@color/colorBlack"
-                android:background="@drawable/evaluation_attribute_background_lighter"
+                android:background="@drawable/evaluation_attribute_background_grey"
                 android:layout_weight="9"
                 android:max="10"
                 android:progress="0" />
@@ -326,6 +336,7 @@
                 android:id="@+id/textViewAttribute4"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
+                android:textSize="24dp"
                 android:layout_weight="1"
                 android:text="NR" />
         </LinearLayout>

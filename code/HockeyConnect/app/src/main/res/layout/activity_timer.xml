@@ -87,7 +87,7 @@
         <Button
             android:id="@+id/startStopButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="240dp"
             android:layout_weight="1"
             android:background="@color/colorGreen"
             android:text="START" />
@@ -104,14 +104,14 @@
             <Button
                 android:id="@+id/buttonCancel"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="120dp"
                 android:layout_weight="1"
                 android:text="Cancel" />
 
             <Button
                 android:id="@+id/buttonSave"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="120dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/colorPrimary"
                 android:textColor="@color/colorWhite"
