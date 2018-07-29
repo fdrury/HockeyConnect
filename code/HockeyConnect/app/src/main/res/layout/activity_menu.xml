@@ -29,7 +29,7 @@
         </android.support.v7.widget.Toolbar>
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/timedEvaluationsButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Timed Evaluations" />
@@ -39,7 +39,7 @@
             android:layout_height="20dp" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/gameEvaluationsButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Game Evaluations" />
