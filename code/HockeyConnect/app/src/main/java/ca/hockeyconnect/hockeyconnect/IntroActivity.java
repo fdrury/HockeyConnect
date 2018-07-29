@@ -21,7 +21,7 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void run() {
                 /* Create an Intent that will start the PlayerEvaluationActivity. */
-                Intent mainIntent = new Intent(IntroActivity.this,PlayerEvaluationActivity.class);
+                Intent mainIntent = new Intent(IntroActivity.this,MenuActivity.class);
                 IntroActivity.this.startActivity(mainIntent);
                 IntroActivity.this.finish();
             }
