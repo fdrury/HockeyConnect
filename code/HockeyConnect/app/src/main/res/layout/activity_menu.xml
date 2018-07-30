@@ -28,10 +28,15 @@
 
         </android.support.v7.widget.Toolbar>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
         <Button
             android:id="@+id/timedEvaluationsButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="120dp"
+            android:textSize="24dp"
             android:text="Timed Evaluations" />
 
         <Space
@@ -41,7 +46,8 @@
         <Button
             android:id="@+id/gameEvaluationsButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="120dp"
+            android:textSize="24dp"
             android:text="Game Evaluations" />
 
     </LinearLayout>
