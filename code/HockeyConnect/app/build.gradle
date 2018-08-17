@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
     defaultConfig {
         applicationId "ca.hockeyconnect.hockeyconnect"
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -19,11 +19,19 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.1'
-    testCompile 'junit:junit:4.12'
+    api 'com.android.support:appcompat-v7:26.1.0'
+    api 'com.android.support.constraint:constraint-layout:1.1.2'
+    api 'com.google.android.gms:play-services-auth:15.0.1'
+    api 'pub.devrel:easypermissions:0.3.0'
+    api('com.google.api-client:google-api-client-android:1.23.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+    api('com.google.apis:google-api-services-sheets:v4-rev516-1.23.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+    testImplementation 'junit:junit:4.12'
 }
