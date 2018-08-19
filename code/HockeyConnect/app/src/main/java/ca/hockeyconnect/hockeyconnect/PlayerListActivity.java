@@ -80,7 +80,7 @@ public class PlayerListActivity extends ListActivity {
         if(getIntent().getStringExtra("EVALUATION_TYPE").equals("GAME")) {
             nextClass = PlayerEvaluationActivity.class;
         } else if(getIntent().getStringExtra("EVALUATION_TYPE").equals("TIMED")) {
-            nextClass = TimerActivity.class;
+            nextClass = TimerMenuActivity.class;
         } else {
             return;
         }

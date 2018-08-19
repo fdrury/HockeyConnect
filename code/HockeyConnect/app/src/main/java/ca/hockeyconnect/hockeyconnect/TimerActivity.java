@@ -94,7 +94,7 @@ public class TimerActivity extends AppCompatActivity {
                     timerRunning = true;
                     startStopButton.setText("STOP");
                     // TODO: use tint instead
-                    //startStopButton.setBackgroundColor(startStopButton.getContext().getResources().getColor(R.color.colorRed));
+                    startStopButton.setBackgroundColor(startStopButton.getContext().getResources().getColor(R.color.colorRed));
                 }
             }
         });
