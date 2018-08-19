@@ -21,6 +21,7 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, PlayerListActivity.class);
                 intent.putExtra("EVALUATION_TYPE", "TIMED");
+                intent.putExtra("TRYOUT_ID", getIntent().getStringExtra("TRYOUT_ID"));
                 startActivity(intent);
             }
         });
@@ -30,6 +31,7 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, PlayerListActivity.class);
                 intent.putExtra("EVALUATION_TYPE", "GAME");
+                intent.putExtra("TRYOUT_ID", getIntent().getStringExtra("TRYOUT_ID"));
                 startActivity(intent);
             }
         });

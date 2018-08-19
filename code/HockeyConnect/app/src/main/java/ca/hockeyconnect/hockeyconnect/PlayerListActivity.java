@@ -15,10 +15,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class PlayerListActivity extends ListActivity {
 
     ArrayList<String> PlayerList = new ArrayList<String>();
+    ArrayList<Integer> PlayerIDList = new ArrayList<Integer>();
 
     ArrayAdapter<String> listAdapter;
 
@@ -27,12 +29,14 @@ public class PlayerListActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_list);
 
+        String tryoutID = getIntent().getStringExtra("TRYOUT_ID");
+
         listAdapter = new ArrayAdapter<String>(this, R.layout.list_item_player, PlayerList);
         setListAdapter(listAdapter);
 
         RequestQueue mRequestQueue = Volley.newRequestQueue(this);
 
-        String url = "http://192.168.0.160:5000/tryout/1";
+        String url = "http://192.168.0.160:5000/tryout/" + tryoutID;
 
         StringRequest stringRequest = new StringRequest
                 (Request.Method.GET, url, new Response.Listener<String>() {
@@ -45,8 +49,10 @@ public class PlayerListActivity extends ListActivity {
                         JSONObject player = reader.getJSONObject(i);
                         String name = player.getString("FirstName") + " " + player.getString("LastName");
                         PlayerList.add(name);
-                        listAdapter.notifyDataSetChanged();
+                        PlayerIDList.add(player.getInt("ID"));
                     }
+                    Collections.sort(PlayerList);
+                    listAdapter.notifyDataSetChanged();
                 } catch(Exception e) {
                     // handle exception
                 }
