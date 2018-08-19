@@ -1,8 +1,11 @@
 package ca.hockeyconnect.hockeyconnect;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,13 +19,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class PlayerListActivity extends ListActivity {
 
-    ArrayList<String> PlayerList = new ArrayList<String>();
-    ArrayList<Integer> PlayerIDList = new ArrayList<Integer>();
-
-    ArrayAdapter<String> listAdapter;
+    ArrayList<Player> PlayerList = new ArrayList<Player>();
+    ArrayAdapter<Player> listAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,7 @@ public class PlayerListActivity extends ListActivity {
 
         String tryoutID = getIntent().getStringExtra("TRYOUT_ID");
 
-        listAdapter = new ArrayAdapter<String>(this, R.layout.list_item_player, PlayerList);
+        listAdapter = new ArrayAdapter<Player>(this, R.layout.list_item_player, PlayerList);
         setListAdapter(listAdapter);
 
         RequestQueue mRequestQueue = Volley.newRequestQueue(this);
@@ -47,11 +49,14 @@ public class PlayerListActivity extends ListActivity {
                     JSONArray reader = new JSONArray(response);
                     for(int i = 0; i  < reader.length(); i++) {
                         JSONObject player = reader.getJSONObject(i);
-                        String name = player.getString("FirstName") + " " + player.getString("LastName");
-                        PlayerList.add(name);
-                        PlayerIDList.add(player.getInt("ID"));
+                        PlayerList.add(new Player(player.getString("FirstName"), player.getString("LastName"), player.getInt("ID")));
                     }
-                    Collections.sort(PlayerList);
+                    Collections.sort(PlayerList, new Comparator<Player>() {
+                        @Override
+                        public int compare(Player o1, Player o2) {
+                            return o1.getLastName().compareTo(o2.getLastName());
+                        }
+                    });
                     listAdapter.notifyDataSetChanged();
                 } catch(Exception e) {
                     // handle exception
@@ -67,5 +72,21 @@ public class PlayerListActivity extends ListActivity {
         });
 
         mRequestQueue.add(stringRequest);
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        Class nextClass;
+        if(getIntent().getStringExtra("EVALUATION_TYPE").equals("GAME")) {
+            nextClass = PlayerEvaluationActivity.class;
+        } else if(getIntent().getStringExtra("EVALUATION_TYPE").equals("TIMED")) {
+            nextClass = TimerActivity.class;
+        } else {
+            return;
+        }
+        Intent intent = new Intent(PlayerListActivity.this, nextClass);
+        intent.putExtra("PLAYER", PlayerList.get(position));
+        intent.putExtra("TRYOUT_ID", getIntent().getStringExtra("TRYOUT_ID"));
+        startActivity(intent);
     }
 }
