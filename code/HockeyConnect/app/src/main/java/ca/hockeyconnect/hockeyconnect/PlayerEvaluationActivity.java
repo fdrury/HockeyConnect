@@ -1,10 +1,8 @@
 package ca.hockeyconnect.hockeyconnect;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -14,11 +12,7 @@ public class PlayerEvaluationActivity extends AppCompatActivity {
 
     SeekBar[] seekBars = new SeekBar[5];
     ImageButton[] helpButtons = new ImageButton[5];
-    TextView timerTextView;
     String[] helpStrings = new String[5];
-    int timerActivityRequestCode = 1234;
-    static final String timerValueRequestCode = "timer_value";
-    long timerMillisecondValue = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,14 +42,12 @@ public class PlayerEvaluationActivity extends AppCompatActivity {
         TextView attribute2TextView = (TextView)findViewById(R.id.textViewAttributeName2);
         TextView attribute3TextView = (TextView)findViewById(R.id.textViewAttributeName3);
         TextView attribute4TextView = (TextView)findViewById(R.id.textViewAttributeName4);
-        timerTextView = (TextView)findViewById(R.id.timerTextView);
 
         final TextView[] attributeValueViews = {(TextView)findViewById(R.id.textViewAttribute0),
                 (TextView)findViewById(R.id.textViewAttribute1),
                 (TextView)findViewById(R.id.textViewAttribute2),
                 (TextView)findViewById(R.id.textViewAttribute3),
                 (TextView)findViewById(R.id.textViewAttribute4)};
-        //final TextView attribute0ValueView = (TextView)findViewById(R.id.textViewAttribute0);
 
         playerNameTextView.setText(R.string.test_player_name_name);
         playerNumberTextView.setText(R.string.test_player_number_name);
@@ -94,30 +86,6 @@ public class PlayerEvaluationActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), helpStrings[index], Toast.LENGTH_LONG).show();
                 }
             });
-        }
-
-        Button timerButton = (Button)findViewById(R.id.timerButton);
-
-        timerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(new Intent(PlayerEvaluationActivity.this, TimerActivity.class), timerActivityRequestCode);
-            }
-        });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == timerActivityRequestCode && resultCode == RESULT_OK && data != null) {
-            timerMillisecondValue = data.getLongExtra(timerValueRequestCode, 0);
-
-            int minutes = (int)(timerMillisecondValue / 1000 / 60);
-            int seconds = (int)(timerMillisecondValue / 1000 % 60);
-            int milliSeconds = (int)(timerMillisecondValue % 1000);
-
-            timerTextView.setText("" + minutes + ":"
-                    + String.format("%02d", seconds) + ":"
-                    + String.format("%03d", milliSeconds));
         }
     }
 

@@ -23,7 +23,8 @@
         <activity android:name=".MenuActivity" />
         <activity android:name=".PlayerListActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".TimerMenuActivity"></activity>
+        <activity android:name=".TimerMenuActivity" />
+        <activity android:name=".JerseySelectionActivity"></activity>
     </application>
 
 </manifest>

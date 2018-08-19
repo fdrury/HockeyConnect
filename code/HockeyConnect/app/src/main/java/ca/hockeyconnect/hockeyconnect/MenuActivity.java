@@ -13,8 +13,19 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        Button jerseyAssignmentButton = (Button)findViewById(R.id.jerseyAssignmentButton);
         Button timedEvaluationsButton = (Button)findViewById(R.id.timedEvaluationsButton);
         Button gameEvaluationsButton = (Button)findViewById(R.id.gameEvaluationsButton);
+
+        jerseyAssignmentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, PlayerListActivity.class);
+                intent.putExtra("EVALUATION_TYPE", "JERSEY");
+                intent.putExtra("TRYOUT_ID", getIntent().getStringExtra("TRYOUT_ID"));
+                startActivity(intent);
+            }
+        });
 
         timedEvaluationsButton.setOnClickListener(new View.OnClickListener() {
             @Override

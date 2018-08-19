@@ -81,6 +81,8 @@ public class PlayerListActivity extends ListActivity {
             nextClass = PlayerEvaluationActivity.class;
         } else if(getIntent().getStringExtra("EVALUATION_TYPE").equals("TIMED")) {
             nextClass = TimerMenuActivity.class;
+        } else if(getIntent().getStringExtra("EVALUATION_TYPE").equals("JERSEY")) {
+            nextClass = JerseySelectionActivity.class;
         } else {
             return;
         }

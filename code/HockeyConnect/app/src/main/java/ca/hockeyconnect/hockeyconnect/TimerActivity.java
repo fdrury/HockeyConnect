@@ -61,7 +61,7 @@ public class TimerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO: send data back
                 Intent output = new Intent();
-                output.putExtra(PlayerEvaluationActivity.timerValueRequestCode, millisecondTime);
+                output.putExtra(TimerMenuActivity.timerValueRequestCode, millisecondTime);
                 setResult(RESULT_OK, output);
                 finish();
             }

@@ -30,36 +30,70 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="20dp" />
+            android:layout_height="80dp" />
 
-        <Button
-            android:id="@+id/jerseyAssignmentButton"
+        <TextView
+            android:id="@+id/textView6"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="wrap_content"
             android:textSize="24dp"
-            android:text="Assign Jersey" />
+            android:gravity="center"
+            android:text="Jersey Number" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="20dp" />
 
-        <Button
-            android:id="@+id/timedEvaluationsButton"
+        <EditText
+            android:id="@+id/NumberEditText"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/colorBlack"
+            android:ems="10"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:inputType="number"
+            android:textCursorDrawable="@null" />
+
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="80dp" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textSize="24dp"
-            android:text="Timed Evaluations" />
+            android:gravity="center"
+            android:text="Jersey Color" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="20dp" />
 
+        <EditText
+            android:id="@+id/ColorEditText"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/colorBlack"
+            android:ems="10"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:inputType="text"
+            android:textCursorDrawable="@null" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="80dp" />
+
         <Button
-            android:id="@+id/gameEvaluationsButton"
+            android:id="@+id/submitButton"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:textSize="24dp"
-            android:text="Game Evaluations" />
+            android:text="Submit" />
 
     </LinearLayout>
 
