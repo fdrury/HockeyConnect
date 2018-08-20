@@ -4,12 +4,12 @@ import datetime
 
 app = Flask(__name__)
 
-sensitiveFile = open('sensitive.txt')
-
-server=sensitiveFile.readline(1)
-user=sensitiveFile.readline(2)
-password=sensitiveFile.readline(3)
-database=sensitiveFile.readline(4)
+sensitiveFile = open('sensitive.txt', 'r')
+# endline character removed
+server=sensitiveFile.readline()[:-1]
+user=sensitiveFile.readline()[:-1]
+password=sensitiveFile.readline()[:-1]
+database=sensitiveFile.readline()[:-1]
 
 @app.route('/player/<path:path>')
 def player(path):
