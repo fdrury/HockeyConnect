@@ -38,7 +38,7 @@ public class PlayerListActivity extends ListActivity {
 
         RequestQueue mRequestQueue = Volley.newRequestQueue(this);
 
-        String url = "http://192.168.0.160:5000/tryout/" + tryoutID;
+        String url = "http://10.69.38.74:5000/tryout/" + tryoutID;
 
         StringRequest stringRequest = new StringRequest
                 (Request.Method.GET, url, new Response.Listener<String>() {
