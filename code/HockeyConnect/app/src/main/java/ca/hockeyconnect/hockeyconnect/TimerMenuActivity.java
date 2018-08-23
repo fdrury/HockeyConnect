@@ -11,6 +11,8 @@ public class TimerMenuActivity extends AppCompatActivity {
 
     TextView timerTextView1;
     TextView timerTextView2;
+    Button saveButton;
+    Button cancelButton;
     int timerActivityRequestCode1 = 1000;
     int timerActivityRequestCode2 = 1001;
     static final String timerValueRequestCode = "timer_value";
@@ -27,6 +29,8 @@ public class TimerMenuActivity extends AppCompatActivity {
 
         Button timerButton1 = (Button)findViewById(R.id.timerButton1);
         Button timerButton2 = (Button)findViewById(R.id.timerButton2);
+        saveButton = (Button)findViewById(R.id.buttonSave);
+        cancelButton = (Button)findViewById(R.id.buttonCancel);
 
         timerButton1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +42,18 @@ public class TimerMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(TimerMenuActivity.this, TimerActivity.class), timerActivityRequestCode2);
+            }
+        });
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

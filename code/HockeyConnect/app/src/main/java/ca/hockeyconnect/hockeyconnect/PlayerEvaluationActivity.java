@@ -3,6 +3,7 @@ package ca.hockeyconnect.hockeyconnect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -12,6 +13,8 @@ public class PlayerEvaluationActivity extends AppCompatActivity {
 
     SeekBar[] seekBars = new SeekBar[5];
     ImageButton[] helpButtons = new ImageButton[5];
+    Button saveButton;
+    Button cancelButton;
     String[] helpStrings = new String[5];
 
     @Override
@@ -24,6 +27,10 @@ public class PlayerEvaluationActivity extends AppCompatActivity {
         seekBars[2] = (SeekBar)findViewById(R.id.seekBar2);
         seekBars[3] = (SeekBar)findViewById(R.id.seekBar3);
         seekBars[4] = (SeekBar)findViewById(R.id.seekBar4);
+
+        saveButton = (Button)findViewById(R.id.buttonSave);
+        cancelButton = (Button)findViewById(R.id.buttonCancel);
+
         helpButtons[0] = (ImageButton)findViewById(R.id.helpButton0);
         helpButtons[1] = (ImageButton)findViewById(R.id.helpButton1);
         helpButtons[2] = (ImageButton)findViewById(R.id.helpButton2);
@@ -87,6 +94,19 @@ public class PlayerEvaluationActivity extends AppCompatActivity {
                 }
             });
         }
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 

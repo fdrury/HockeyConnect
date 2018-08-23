@@ -52,5 +52,4 @@ def saveTimedEval():
 
 if __name__ == '__main__':
     #app.run(debug=True) # localhost
-    #app.run(host='192.168.0.160',debug=True)
-    app.run(host='10.69.38.74',debug=True)
+    app.run(host='192.168.0.160',debug=True)
