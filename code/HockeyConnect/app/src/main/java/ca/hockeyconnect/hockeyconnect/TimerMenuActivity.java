@@ -1,11 +1,25 @@
 package ca.hockeyconnect.hockeyconnect;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class TimerMenuActivity extends AppCompatActivity {
 
@@ -23,6 +37,35 @@ public class TimerMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer_menu);
+
+
+
+        /*final RequestQueue mRequestQueue = Volley.newRequestQueue(this);
+        String url = "http://192.168.0.160:5000/timedEval";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("playerID", getIntent().getStringExtra("PLAYER"));
+        params.put("tryoutID", getIntent().getStringExtra("TRYOUT_ID"));
+        // TODO: ignore zero values
+        long shortestTime = timerMillisecondValue1 < timerMillisecondValue2 ? timerMillisecondValue1 : timerMillisecondValue2; //choose lowest
+        params.put("duration", Long.toString(shortestTime));
+        JSONObject jsonObject = new JSONObject(params);
+
+        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("JSONResponse", response.toString());
+                String reader = response.toString();
+                finish();
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Saving Failed", Toast.LENGTH_LONG).show();
+            }
+        });*/
 
         timerTextView1 = (TextView)findViewById(R.id.timerTextView1);
         timerTextView2 = (TextView)findViewById(R.id.timerTextView2);
@@ -50,10 +93,37 @@ public class TimerMenuActivity extends AppCompatActivity {
                 finish();
             }
         });
+        final Context currentContext = this;
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                final RequestQueue mRequestQueue = Volley.newRequestQueue(currentContext);
+                String url = "http://192.168.0.160:5000/timedEval";
+                Map<String, String> params = new HashMap<String, String>();
+                Player thisPlayer = (Player)getIntent().getSerializableExtra("PLAYER");
+                params.put("playerID", Integer.toString(thisPlayer.getID()));
+                params.put("tryoutID", getIntent().getStringExtra("TRYOUT_ID"));
+                // TODO: ignore zero values
+                long shortestTime = timerMillisecondValue1 < timerMillisecondValue2 ? timerMillisecondValue1 : timerMillisecondValue2; //choose lowest
+                params.put("duration", Long.toString(shortestTime));
+                JSONObject jsonObject = new JSONObject(params);
+
+                final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                        (Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
+
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                finish();
+                            }
+                        }, new Response.ErrorListener() {
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(getApplicationContext(), "Saving Failed", Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+                mRequestQueue.add(jsonObjectRequest);
             }
         });
     }

@@ -3,6 +3,7 @@ package ca.hockeyconnect.hockeyconnect;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -23,6 +24,7 @@ import java.util.Comparator;
 
 public class PlayerListActivity extends ListActivity {
 
+    SwipeRefreshLayout swipeRefreshLayout;
     ArrayList<Player> PlayerList = new ArrayList<Player>();
     ArrayAdapter<Player> listAdapter;
 
@@ -33,12 +35,24 @@ public class PlayerListActivity extends ListActivity {
 
         String tryoutID = getIntent().getStringExtra("TRYOUT_ID");
 
+        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh);
         listAdapter = new ArrayAdapter<Player>(this, R.layout.list_item_player, PlayerList);
         setListAdapter(listAdapter);
 
         RequestQueue mRequestQueue = Volley.newRequestQueue(this);
 
-        String url = "http://10.69.38.74:5000/tryout/" + tryoutID;
+        String url = "http://192.168.0.160:5000/tryout/" + tryoutID;
+
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        // restart activity
+                        finish();
+                        startActivity(getIntent());
+                    }
+                }
+        );
 
         StringRequest stringRequest = new StringRequest
                 (Request.Method.GET, url, new Response.Listener<String>() {
