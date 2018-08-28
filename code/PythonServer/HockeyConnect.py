@@ -42,12 +42,32 @@ def saveTimedEval():
             print(request.is_json)
             content = request.get_json()
             print(content)
-            ID = content.get('ID')
+            playerID = int(content.get('playerID'))
+            tryoutID = content.get('tryoutID')
             duration = content.get('duration')
             currentTime = datetime.datetime.now().strftime('%Y%m%d %H:%M:%S')
-            cursor.execute('INSERT INTO TimedEvaluations(PlayerID, Duration, Date) VALUES (%d, %d, %s);', (ID, duration, currentTime))
+            cursor.execute('INSERT INTO TimedEvaluations(PlayerID, TryoutID, Duration, Date) VALUES (%d, %d, %d, %s);', (playerID, tryoutID, duration, currentTime))
             conn.commit()
-            return 'Success'
+            return jsonify({'Success' : 1})
+
+@app.route('/gameEval', methods = ['POST'])
+def saveGameEval():
+    with pymssql.connect(server, user, password, database) as conn:
+        with conn.cursor(as_dict=True) as cursor:
+            print(request.is_json)
+            content = request.get_json()
+            print(content)
+            playerID = int(content.get('playerID'))
+            tryoutID = content.get('tryoutID')
+            speed = int(content.get('speed'))
+            hockeyAwareness = int(content.get('hockeyAwareness'))
+            competeLevel = int(content.get('competeLevel'))
+            puckHandling = int(content.get('puckHandling'))
+            agility = int(content.get('agility'))
+            currentTime = datetime.datetime.now().strftime('%Y%m%d %H:%M:%S')
+            cursor.execute('INSERT INTO SkillEvaluations(PlayerID, TryoutID, Speed, HockeyAwareness, CompeteLevel, PuckHandling, Agility, Date) VALUES (%d, %d, %d, %d, %d, %d, %d, %s);', (playerID, tryoutID, speed, hockeyAwareness, competeLevel, puckHandling, agility, currentTime))
+            conn.commit()
+            return jsonify({'Success' : 1})
 
 
 if __name__ == '__main__':
