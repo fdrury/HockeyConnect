@@ -54,36 +54,35 @@ public class PlayerListActivity extends ListActivity {
                 }
         );
 
-        StringRequest stringRequest = new StringRequest
-                (Request.Method.GET, url, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray reader = new JSONArray(response);
-                    for(int i = 0; i  < reader.length(); i++) {
-                        JSONObject player = reader.getJSONObject(i);
-                        PlayerList.add(new Player(player.getString("FirstName"), player.getString("LastName"), player.getInt("ID")));
-                    }
-                    Collections.sort(PlayerList, new Comparator<Player>() {
-                        @Override
-                        public int compare(Player o1, Player o2) {
-                            return o1.getLastName().compareTo(o2.getLastName());
+        StringRequest stringRequest = new StringRequest (Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray reader = new JSONArray(response);
+                            for(int i = 0; i  < reader.length(); i++) {
+                                JSONObject player = reader.getJSONObject(i);
+                                PlayerList.add(new Player(player.getString("FirstName"), player.getString("LastName"), player.getInt("ID")));
+                            }
+                            Collections.sort(PlayerList, new Comparator<Player>() {
+                                @Override
+                                public int compare(Player o1, Player o2) {
+                                    return o1.getLastName().compareTo(o2.getLastName());
+                                }
+                            });
+                            listAdapter.notifyDataSetChanged();
+                        } catch(Exception e) {
+                            // handle exception
                         }
-                    });
-                    listAdapter.notifyDataSetChanged();
-                } catch(Exception e) {
-                    // handle exception
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                    }
                 }
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // TODO: Handle error
-
-            }
-        });
+        );
 
         mRequestQueue.add(stringRequest);
     }
