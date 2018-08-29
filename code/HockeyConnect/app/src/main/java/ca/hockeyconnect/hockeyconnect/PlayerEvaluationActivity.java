@@ -36,6 +36,9 @@ public class PlayerEvaluationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_evaluation);
 
+        final Player thisPlayer = (Player)getIntent().getSerializableExtra("PLAYER");
+        final String tryoutID = getIntent().getStringExtra("TRYOUT_ID");
+
         seekBars[0] = (SeekBar)findViewById(R.id.seekBar0);
         seekBars[1] = (SeekBar)findViewById(R.id.seekBar1);
         seekBars[2] = (SeekBar)findViewById(R.id.seekBar2);
@@ -71,13 +74,41 @@ public class PlayerEvaluationActivity extends AppCompatActivity {
                 (TextView)findViewById(R.id.textViewAttribute4)};
 
         // TODO: name & number
-        playerNameTextView.setText(R.string.test_player_name_name);
-        playerNumberTextView.setText(R.string.test_player_number_name);
+        playerNameTextView.setText(thisPlayer.getFullName());
+        //playerNumberTextView.setText(R.string.test_player_number_name);
+        playerNumberTextView.setText("");
         attribute0TextView.setText(R.string.attribute0_name);
         attribute1TextView.setText(R.string.attribute1_name);
         attribute2TextView.setText(R.string.attribute2_name);
         attribute3TextView.setText(R.string.attribute3_name);
         attribute4TextView.setText(R.string.attribute4_name);
+
+        final RequestQueue mRequestQueue1 = Volley.newRequestQueue(this);
+        String url1 = String.format("http://192.168.0.160:5000/getGameEval/%s/%d", tryoutID, thisPlayer.getID());
+        final JsonObjectRequest jsonObjectRequest1 = new JsonObjectRequest (Request.Method.GET, url1, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // TODO: populate sliders
+                        try {
+                            seekBars[0].setProgress(response.getInt("Speed"));
+                            seekBars[1].setProgress(response.getInt("HockeyAwareness"));
+                            seekBars[2].setProgress(response.getInt("CompeteLevel"));
+                            seekBars[3].setProgress(response.getInt("PuckHandling"));
+                            seekBars[4].setProgress(response.getInt("Agility"));
+                        } catch(Exception e) {
+                            // TODO: catch exception
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: does anything need to be done here?
+                    }
+                }
+        );
+        mRequestQueue1.add(jsonObjectRequest1);
 
         for(int i = 0; i < 5; i++) {
             final TextView attributeValueView = attributeValueViews[i];
@@ -122,21 +153,20 @@ public class PlayerEvaluationActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final RequestQueue mRequestQueue = Volley.newRequestQueue(currentContext);
-                String url = "http://192.168.0.160:5000/gameEval";
-                Map<String, String> params = new HashMap<String, String>();
-                Player thisPlayer = (Player)getIntent().getSerializableExtra("PLAYER");
-                params.put("playerID", Integer.toString(thisPlayer.getID()));
-                params.put("tryoutID", getIntent().getStringExtra("TRYOUT_ID"));
+                final RequestQueue mRequestQueue2 = Volley.newRequestQueue(currentContext);
+                String url2 = "http://192.168.0.160:5000/postGameEval";
+                Map<String, String> params2 = new HashMap<String, String>();
+                params2.put("playerID", Integer.toString(thisPlayer.getID()));
+                params2.put("tryoutID", tryoutID);
                 // TODO: ignore zero values
-                params.put("speed", Integer.toString(attributeValues[0]));
-                params.put("hockeyAwareness", Integer.toString(attributeValues[1]));
-                params.put("competeLevel", Integer.toString(attributeValues[2]));
-                params.put("puckHandling", Integer.toString(attributeValues[3]));
-                params.put("agility", Integer.toString(attributeValues[4]));
-                JSONObject jsonObject = new JSONObject(params);
+                params2.put("speed", Integer.toString(attributeValues[0]));
+                params2.put("hockeyAwareness", Integer.toString(attributeValues[1]));
+                params2.put("competeLevel", Integer.toString(attributeValues[2]));
+                params2.put("puckHandling", Integer.toString(attributeValues[3]));
+                params2.put("agility", Integer.toString(attributeValues[4]));
+                JSONObject jsonObject2 = new JSONObject(params2);
 
-                final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest (Request.Method.POST, url, jsonObject,
+                final JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest (Request.Method.POST, url2, jsonObject2,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
@@ -151,7 +181,7 @@ public class PlayerEvaluationActivity extends AppCompatActivity {
                         }
                 );
 
-                mRequestQueue.add(jsonObjectRequest);
+                mRequestQueue2.add(jsonObjectRequest2);
             }
         });
     }
