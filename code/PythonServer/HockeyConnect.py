@@ -50,7 +50,14 @@ def saveTimedEval():
             conn.commit()
             return jsonify({'Success' : 1})
 
-@app.route('/gameEval', methods = ['POST'])
+@app.route('/getGameEval/<tryout>/<player>')
+def loadGameEval(tryout, player):
+    with pymssql.connect(server, user, password, database) as conn:
+        with conn.cursor(as_dict=True) as cursor:
+            cursor.execute('SELECT Speed, HockeyAwareness, CompeteLevel, PuckHandling, Agility FROM SkillEvaluations WHERE TryoutID = %s AND PlayerID = %s ORDER BY Date DESC;', (tryout, player))
+            return jsonify(cursor.fetchone())
+
+@app.route('/postGameEval', methods = ['POST'])
 def saveGameEval():
     with pymssql.connect(server, user, password, database) as conn:
         with conn.cursor(as_dict=True) as cursor:
