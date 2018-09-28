@@ -118,18 +118,37 @@ def uploadPlayers():
 def downloadTimedEvals(path = None):
     with pymssql.connect(server, user, password, database) as conn:
         with conn.cursor(as_dict=True) as cursor:
-            templateCSV = 'timedEvaluationTemplate.csv'
+            templateCSV = 'template.csv'
             tempCSV = NamedTemporaryFile(delete=False)
             with open(templateCSV, 'w') as tempCSV:
-                fieldnames = ['FirstName', 'LastName', 'Duration', 'Evaluator', 'Date']
+                cursor.execute('SELECT * FROM Players INNER JOIN TimedEvaluations ON Players.ID=TimedEvaluations.PlayerID AND TimedEvaluations.TryoutID = %s;', path)
+                row = cursor.fetchone()
+                fieldnames = row.keys()
                 writer = csv.DictWriter(tempCSV, fieldnames=fieldnames)
                 writer.writeheader()
-                cursor.execute('SELECT Players.FirstName, Players.LastName, TimedEvaluations.Duration, TimedEvaluations.Evaluator, TimedEvaluations.Date FROM Players INNER JOIN TimedEvaluations ON Players.ID=TimedEvaluations.PlayerID AND TimedEvaluations.TryoutID = %s;', path)
-                row = cursor.fetchone()
                 while row:
                     writer.writerow(row)
                     row = cursor.fetchone()
             return send_file(tempCSV.name, as_attachment=True, attachment_filename='timed_evaluations_%s.csv' % path)
+    return('error')
+
+
+@app.route('/downloadSkillEvals/<path>')
+def downloadSkillEvals(path = None):
+    with pymssql.connect(server, user, password, database) as conn:
+        with conn.cursor(as_dict=True) as cursor:
+            templateCSV = 'template.csv'
+            tempCSV = NamedTemporaryFile(delete=False)
+            with open(templateCSV, 'w') as tempCSV:
+                cursor.execute('SELECT * FROM Players INNER JOIN SkillEvaluations ON Players.ID=SkillEvaluations.PlayerID AND SkillEvaluations.TryoutID = %s;', path)
+                row = cursor.fetchone()
+                fieldnames = row.keys()
+                writer = csv.DictWriter(tempCSV, fieldnames=fieldnames)
+                writer.writeheader()
+                while row:
+                    writer.writerow(row)
+                    row = cursor.fetchone()
+            return send_file(tempCSV.name, as_attachment=True, attachment_filename='skill_evaluations_%s.csv' % path)
     return('error')
 
 
