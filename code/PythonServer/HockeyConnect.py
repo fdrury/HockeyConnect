@@ -1,4 +1,5 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
+from tempfile import NamedTemporaryFile
 import pymssql
 import datetime
 import csv
@@ -111,6 +112,25 @@ def uploadPlayers():
             
             conn.commit()
             return ('File uploaded successfully. Your Tryout ID is %d' % newTryoutID)
+
+
+@app.route('/downloadTimedEvals/<path>')
+def downloadTimedEvals(path = None):
+    with pymssql.connect(server, user, password, database) as conn:
+        with conn.cursor(as_dict=True) as cursor:
+            templateCSV = 'timedEvaluationTemplate.csv'
+            tempCSV = NamedTemporaryFile(delete=False)
+            with open(templateCSV, 'w') as tempCSV:
+                fieldnames = ['FirstName', 'LastName', 'Duration', 'Evaluator', 'Date']
+                writer = csv.DictWriter(tempCSV, fieldnames=fieldnames)
+                writer.writeheader()
+                cursor.execute('SELECT Players.FirstName, Players.LastName, TimedEvaluations.Duration, TimedEvaluations.Evaluator, TimedEvaluations.Date FROM Players INNER JOIN TimedEvaluations ON Players.ID=TimedEvaluations.PlayerID AND TimedEvaluations.TryoutID = %s;', path)
+                row = cursor.fetchone()
+                while row:
+                    writer.writerow(row)
+                    row = cursor.fetchone()
+            return send_file(tempCSV.name, as_attachment=True, attachment_filename='timed_evaluations_%s.csv' % path)
+    return('error')
 
 
 if __name__ == '__main__':
