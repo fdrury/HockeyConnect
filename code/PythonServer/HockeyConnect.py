@@ -69,11 +69,14 @@ def saveGameEval():
             print(content)
             playerID = int(content.get('playerID'))
             tryoutID = content.get('tryoutID')
+            cursor.execute('SELECT ID FROM TryoutCriteria WHERE TryoutID = %s', (tryoutID))
+            
             speed = int(content.get('speed'))
             hockeyAwareness = int(content.get('hockeyAwareness'))
             competeLevel = int(content.get('competeLevel'))
             puckHandling = int(content.get('puckHandling'))
             agility = int(content.get('agility'))
+            
             currentTime = datetime.datetime.now().strftime('%Y%m%d %H:%M:%S')
             cursor.execute('INSERT INTO SkillEvaluations(PlayerID, TryoutID, Speed, HockeyAwareness, CompeteLevel, PuckHandling, Agility, Date) VALUES (%d, %d, %d, %d, %d, %d, %d, %s);', (playerID, tryoutID, speed, hockeyAwareness, competeLevel, puckHandling, agility, currentTime))
             conn.commit()
