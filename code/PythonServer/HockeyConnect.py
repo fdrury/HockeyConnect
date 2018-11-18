@@ -69,16 +69,16 @@ def saveGameEval():
             print(content)
             playerID = int(content.get('playerID'))
             tryoutID = content.get('tryoutID')
-            cursor.execute('SELECT ID FROM TryoutCriteria WHERE TryoutID = %s', (tryoutID))
-            
-            speed = int(content.get('speed'))
-            hockeyAwareness = int(content.get('hockeyAwareness'))
-            competeLevel = int(content.get('competeLevel'))
-            puckHandling = int(content.get('puckHandling'))
-            agility = int(content.get('agility'))
-            
+            evaluatorID = content.get('evaluatorID')
             currentTime = datetime.datetime.now().strftime('%Y%m%d %H:%M:%S')
-            cursor.execute('INSERT INTO SkillEvaluations(PlayerID, TryoutID, Speed, HockeyAwareness, CompeteLevel, PuckHandling, Agility, Date) VALUES (%d, %d, %d, %d, %d, %d, %d, %s);', (playerID, tryoutID, speed, hockeyAwareness, competeLevel, puckHandling, agility, currentTime))
+            cursor.execute('SELECT ID FROM TryoutCriteria WHERE TryoutID = %s', (tryoutID))
+            row = cursor.fetchone()
+            while row:
+                # do stuff
+                criteriaID = ('criteria%s', row.keys()[0])
+                value = int(content.get(criteriaID))
+                cursor.execute('INSERT INTO SkillEvaluations(PlayerID, TryoutID, EvaluatorID, CriteriaID, Value, Date) VALUES (%d, %d, %d, %d, %d, %s);', (playerID, tryoutID, evaluatorID, criteriaID, value, currentTime))
+                row = cursor.fetchone()
             conn.commit()
             return jsonify({'Success' : 1})
 
