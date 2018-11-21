@@ -101,6 +101,7 @@ public class PlayerListActivity extends ListActivity {
         }
         Intent intent = new Intent(PlayerListActivity.this, nextClass);
         intent.putExtra("PLAYER", PlayerList.get(position));
+        intent.putExtra("EVALUATOR_ID", getIntent().getStringExtra("EVALUATOR_ID"));
         intent.putExtra("TRYOUT_ID", getIntent().getStringExtra("TRYOUT_ID"));
         startActivity(intent);
     }

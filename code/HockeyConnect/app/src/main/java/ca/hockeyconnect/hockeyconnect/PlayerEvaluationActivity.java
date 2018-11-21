@@ -37,7 +37,31 @@ public class PlayerEvaluationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_player_evaluation);
 
         final Player thisPlayer = (Player)getIntent().getSerializableExtra("PLAYER");
+        final String evaluatorID = getIntent().getStringExtra("EVALUATOR_ID");
         final String tryoutID = getIntent().getStringExtra("TRYOUT_ID");
+
+        // TODO: this is copied from below - needs to be customized accordingly.
+        final RequestQueue mRequestQueue0 = Volley.newRequestQueue(this);
+        String url0 = String.format("http://192.168.0.160:5000/getEvalCrit/%s", tryoutID);
+        final JsonObjectRequest jsonObjectRequest0 = new JsonObjectRequest (Request.Method.GET, url0, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            // TODO: add sliders
+                        } catch(Exception e) {
+                            // TODO: catch exception
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: does anything need to be done here?
+                    }
+                }
+        );
+        mRequestQueue0.add(jsonObjectRequest0);
 
         seekBars[0] = (SeekBar)findViewById(R.id.seekBar0);
         seekBars[1] = (SeekBar)findViewById(R.id.seekBar1);
@@ -157,6 +181,7 @@ public class PlayerEvaluationActivity extends AppCompatActivity {
                 String url2 = "http://192.168.0.160:5000/postGameEval";
                 Map<String, String> params2 = new HashMap<String, String>();
                 params2.put("playerID", Integer.toString(thisPlayer.getID()));
+                params2.put("evaluatorID", evaluatorID);
                 params2.put("tryoutID", tryoutID);
                 // TODO: ignore zero values
                 params2.put("speed", Integer.toString(attributeValues[0]));
