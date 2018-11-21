@@ -1,9 +1,11 @@
 package ca.hockeyconnect.hockeyconnect;
 
+import android.app.ListActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
@@ -19,22 +21,28 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PlayerEvaluationActivity extends AppCompatActivity {
+public class PlayerEvaluationActivity extends ListActivity {
 
-    SeekBar[] seekBars = new SeekBar[5];
-    ImageButton[] helpButtons = new ImageButton[5];
+    ArrayList<SeekBar> seekBars = new ArrayList<SeekBar>();
+    ArrayList<ImageButton> helpButtons = new ArrayList<ImageButton>();
     Button saveButton;
     Button cancelButton;
-    String[] helpStrings = new String[5];
-    int[] attributeValues = new int[5];
+    ArrayList<String> helpStrings = new ArrayList<String>();
+    ArrayList<Integer> attributeValues = new ArrayList<Integer>();
+    // TODO: this list adapter has nothing to do with players - just copied here as-is
+    ArrayAdapter<Player> listAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_evaluation);
+
+        listAdapter = new ArrayAdapter<Player>(this, R.layout.list_item_player, PlayerList);
+        setListAdapter(listAdapter);
 
         final Player thisPlayer = (Player)getIntent().getSerializableExtra("PLAYER");
         final String evaluatorID = getIntent().getStringExtra("EVALUATOR_ID");
