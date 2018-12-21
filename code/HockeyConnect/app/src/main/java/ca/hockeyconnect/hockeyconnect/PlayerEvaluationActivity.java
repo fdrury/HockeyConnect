@@ -17,11 +17,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,15 +37,16 @@ public class PlayerEvaluationActivity extends ListActivity {
     Button cancelButton;
     ArrayList<String> helpStrings = new ArrayList<String>();
     ArrayList<Integer> attributeValues = new ArrayList<Integer>();
-    // TODO: this list adapter has nothing to do with players - just copied here as-is
-    ArrayAdapter<Player> listAdapter;
+
+    ArrayList<Attribute> attributeList = new ArrayList<Attribute>();
+    ArrayAdapter<Attribute> listAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_evaluation);
 
-        listAdapter = new ArrayAdapter<Player>(this, R.layout.list_item_player, PlayerList);
+        listAdapter = new ArrayAdapter<Attribute>(this, R.layout.list_item_attribute_slider, attributeList);
         setListAdapter(listAdapter);
 
         final Player thisPlayer = (Player)getIntent().getSerializableExtra("PLAYER");
@@ -51,25 +56,30 @@ public class PlayerEvaluationActivity extends ListActivity {
         // TODO: this is copied from below - needs to be customized accordingly.
         final RequestQueue mRequestQueue0 = Volley.newRequestQueue(this);
         String url0 = String.format("http://192.168.0.160:5000/getEvalCrit/%s", tryoutID);
-        final JsonObjectRequest jsonObjectRequest0 = new JsonObjectRequest (Request.Method.GET, url0, null,
-                new Response.Listener<JSONObject>() {
+        StringRequest stringRequest = new StringRequest (Request.Method.GET, url0,
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(String response) {
                         try {
-                            // TODO: add sliders
+                            JSONArray reader = new JSONArray(response);
+                            for(int i = 0; i  < reader.length(); i++) {
+                                JSONObject attribute = reader.getJSONObject(i);
+                                attributeList.add(new Attribute(attribute.getString("Name"), attribute.getString("Description"), attribute.getInt("ID")));
+                            }
+                            listAdapter.notifyDataSetChanged();
                         } catch(Exception e) {
-                            // TODO: catch exception
+                            // handle exception
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO: does anything need to be done here?
+                        // TODO: Handle error
                     }
                 }
         );
-        mRequestQueue0.add(jsonObjectRequest0);
+        mRequestQueue0.add(stringRequest);
 
         seekBars[0] = (SeekBar)findViewById(R.id.seekBar0);
         seekBars[1] = (SeekBar)findViewById(R.id.seekBar1);

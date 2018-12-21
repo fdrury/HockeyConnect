@@ -57,7 +57,7 @@ def saveTimedEval():
 def getEvalCrit(tryout):
     with pymssql.connect(server, user, password, database) as conn:
         with conn.cursor(as_dict=True) as cursor:
-            cursor.execute('SELECT Criteria.Name, Criteria.Description FROM Criteria INNER JOIN TryoutCriteria ON Criteria.ID=TryoutCriteria.CriteriaID AND TryoutCriteria.TryoutID = %s;', tryout)
+            cursor.execute('SELECT Criteria.Name, Criteria.Description, Criteria.ID FROM Criteria INNER JOIN TryoutCriteria ON Criteria.ID=TryoutCriteria.CriteriaID AND TryoutCriteria.TryoutID = %s;', tryout)
             row = cursor.fetchone()
             rows = []
             while row:
