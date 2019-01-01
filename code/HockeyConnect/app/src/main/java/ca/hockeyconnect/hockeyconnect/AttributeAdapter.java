@@ -10,24 +10,32 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class AttributeAdapter extends ArrayAdapter<Attribute> {
+    private final Context context;
+    private final ArrayList<Attribute> attributes;
+
     public AttributeAdapter(Context context, ArrayList<Attribute> attributes) {
         super(context, 0, attributes);
+        this.context = context;
+        this.attributes = attributes;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        Attribute attribute = getItem(position);
-        // Check if an existing view is being reused, otherwise inflate the view
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_attribute_slider, parent, false);
-        }
+        Attribute attribute = attributes.get(position);
+
+        // inflate the view
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View rowView = inflater.inflate(R.layout.list_item_attribute_slider, parent, false);
+
         // Lookup view for data population
-        TextView attributeName = (TextView) convertView.findViewById(R.id.textViewAttributeName);
+        TextView attributeName = (TextView) rowView.findViewById(R.id.textViewAttributeName);
+
         // Populate the data into the template view using the data object
         attributeName.setText(attribute.getAttributeName());
+
         // Return the completed view to render on screen
-        return convertView;
+        return rowView;
     }
 
 }

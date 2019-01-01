@@ -98,7 +98,7 @@ public class TimerMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final RequestQueue mRequestQueue = Volley.newRequestQueue(currentContext);
-                String url = "http://192.168.0.160:5000/timedEval";
+                String url = String.format("%s/timedEval", getString(R.string.server_url));
                 Map<String, String> params = new HashMap<String, String>();
                 Player thisPlayer = (Player)getIntent().getSerializableExtra("PLAYER");
                 params.put("playerID", Integer.toString(thisPlayer.getID()));

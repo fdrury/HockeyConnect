@@ -53,7 +53,7 @@
         android:progress="0" />
 
     <TextView
-        android:id="@+id/textViewAttribute3"
+        android:id="@+id/textViewAttributeValue"
         android:layout_width="10dp"
         android:layout_height="wrap_content"
         android:textColor="@color/colorBlack"
