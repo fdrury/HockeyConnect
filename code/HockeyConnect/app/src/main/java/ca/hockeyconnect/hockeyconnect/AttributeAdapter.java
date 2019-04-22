@@ -24,6 +24,7 @@ import java.util.ArrayList;
 public class AttributeAdapter extends ArrayAdapter<Attribute> {
     private final Context context;
     private final ArrayList<Attribute> attributes;
+    private ArrayList<SeekBar> seekBars = new ArrayList<>();
 
     public AttributeAdapter(Context context, ArrayList<Attribute> attributes) {
         super(context, 0, attributes);
@@ -48,6 +49,7 @@ public class AttributeAdapter extends ArrayAdapter<Attribute> {
             attributeName.setText(attribute.getAttributeName());
 
             final SeekBar seekBar = convertView.findViewById(R.id.seekBar);
+            seekBars.add(seekBar);
             ImageButton helpButton = convertView.findViewById(R.id.helpButton);
             final TextView attributeValueView = convertView.findViewById(R.id.textViewAttributeValue);
             final int index = position;
@@ -115,5 +117,13 @@ public class AttributeAdapter extends ArrayAdapter<Attribute> {
         );
         mRequestQueue1.add(jsonObjectRequest1);
     }*/
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+        for(int i = 0; i < seekBars.size(); i++) {
+            seekBars.get(i).setProgress(attributes.get(i).getValue());
+        }
+    }
 
 }

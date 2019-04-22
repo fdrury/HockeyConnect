@@ -53,86 +53,10 @@ public class PlayerEvaluationActivity extends ListActivity {
         final String evaluatorID = getIntent().getStringExtra("EVALUATOR_ID");
         final String tryoutID = getIntent().getStringExtra("TRYOUT_ID");
 
-        // TODO: this is copied from below - needs to be customized accordingly.
-        final RequestQueue mRequestQueue0 = Volley.newRequestQueue(this);
-        String url0 = String.format("%s/getEvalCrit/%s", getString(R.string.server_url), tryoutID);
-        StringRequest stringRequest1 = new StringRequest (Request.Method.GET, url0,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONArray reader = new JSONArray(response);
-                            for(int i = 0; i  < reader.length(); i++) {
-                                JSONObject attribute = reader.getJSONObject(i);
-                                // TODO: the following line is causing crashes but will eventually need to exist
-                                attributeList.add(new Attribute(attribute.getString("Name"), attribute.getString("Description"), attribute.getInt("ID")));
-                                // TODO: but the following line works
-                                //Attribute testAttr = new Attribute(attribute.getString("Name"), attribute.getString("Description"), attribute.getInt("ID"));
-                                // TODO: the following line also crashes
-                                //attributeList.add(null);
-                            }
-                            listAdapter.notifyDataSetChanged();
-                        } catch(Exception e) {
-                            // handle exception
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-                    }
-                }
-        );
-        mRequestQueue0.add(stringRequest1);
-
-        /*seekBars[0] = (SeekBar)findViewById(R.id.seekBar0);
-        seekBars[1] = (SeekBar)findViewById(R.id.seekBar1);
-        seekBars[2] = (SeekBar)findViewById(R.id.seekBar2);
-        seekBars[3] = (SeekBar)findViewById(R.id.seekBar3);
-        seekBars[4] = (SeekBar)findViewById(R.id.seekBar4);*/
-
-        saveButton = (Button)findViewById(R.id.buttonSave);
-        cancelButton = (Button)findViewById(R.id.buttonCancel);
-
-        /*helpButtons[0] = (ImageButton)findViewById(R.id.helpButton0);
-        helpButtons[1] = (ImageButton)findViewById(R.id.helpButton1);
-        helpButtons[2] = (ImageButton)findViewById(R.id.helpButton2);
-        helpButtons[3] = (ImageButton)findViewById(R.id.helpButton3);
-        helpButtons[4] = (ImageButton)findViewById(R.id.helpButton4);
-        helpStrings[0] = "Speed/Explosiveness: How fast a player skates relative to other players.";
-        helpStrings[1] = "Hockey Awareness/Instincts/Sense: Reads and reacts/anticipates where the puck is going. A player's ability to assess plays and predict movements.";
-        helpStrings[2] = "Compete Level: Work ethic, attacking the puck, strong with the puck, battles with other players.";
-        helpStrings[3] = "Puck Handling: Stick work, stick handling, passing, seeing the ice with the puck.";
-        helpStrings[4] = "Agility: Pivoting, backwards to forwards and vice-versa, ability to stay on feet in crowded areas.";*/
-
-        TextView playerNameTextView = (TextView)findViewById(R.id.textViewPlayerName);
-        TextView playerNumberTextView = (TextView)findViewById(R.id.textViewPlayerNumber);
-        /*TextView attribute0TextView = (TextView)findViewById(R.id.textViewAttributeName0);
-        TextView attribute1TextView = (TextView)findViewById(R.id.textViewAttributeName1);
-        TextView attribute2TextView = (TextView)findViewById(R.id.textViewAttributeName2);
-        TextView attribute3TextView = (TextView)findViewById(R.id.textViewAttributeName3);
-        TextView attribute4TextView = (TextView)findViewById(R.id.textViewAttributeName4);
-
-        final TextView[] attributeValueViews = {(TextView)findViewById(R.id.textViewAttribute0),
-                (TextView)findViewById(R.id.textViewAttribute1),
-                (TextView)findViewById(R.id.textViewAttribute2),
-                (TextView)findViewById(R.id.textViewAttribute3),
-                (TextView)findViewById(R.id.textViewAttribute4)};*/
-
-        // TODO: name & number
-        playerNameTextView.setText(thisPlayer.getFullName());
-        //playerNumberTextView.setText(R.string.test_player_number_name);
-        playerNumberTextView.setText("");
-        /*attribute0TextView.setText(R.string.attribute0_name);
-        attribute1TextView.setText(R.string.attribute1_name);
-        attribute2TextView.setText(R.string.attribute2_name);
-        attribute3TextView.setText(R.string.attribute3_name);
-        attribute4TextView.setText(R.string.attribute4_name);*/
-
+        // setup first but is added to queue on result of following request.
         final RequestQueue mRequestQueue1 = Volley.newRequestQueue(this);
         String url1 = String.format("%s/getGameEval/%s/%d", getString(R.string.server_url), tryoutID, thisPlayer.getID());
-        StringRequest stringRequest2 = new StringRequest (Request.Method.GET, url1,
+        final StringRequest stringRequest2 = new StringRequest (Request.Method.GET, url1,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -156,7 +80,52 @@ public class PlayerEvaluationActivity extends ListActivity {
                     }
                 }
         );
-        mRequestQueue0.add(stringRequest2); // reuse requestQueue0 so that this executes after creating attributes.
+
+        // TODO: this is copied from below - needs to be customized accordingly.
+        // TODO: only use one RequestQueue
+        final RequestQueue mRequestQueue0 = Volley.newRequestQueue(this);
+        String url0 = String.format("%s/getEvalCrit/%s", getString(R.string.server_url), tryoutID);
+        StringRequest stringRequest1 = new StringRequest (Request.Method.GET, url0,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray reader = new JSONArray(response);
+                            for(int i = 0; i  < reader.length(); i++) {
+                                JSONObject attribute = reader.getJSONObject(i);
+                                // TODO: the following line is causing crashes but will eventually need to exist
+                                attributeList.add(new Attribute(attribute.getString("Name"), attribute.getString("Description"), attribute.getInt("ID")));
+                                // TODO: but the following line works
+                                //Attribute testAttr = new Attribute(attribute.getString("Name"), attribute.getString("Description"), attribute.getInt("ID"));
+                                // TODO: the following line also crashes
+                                //attributeList.add(null);
+                            }
+                            listAdapter.notifyDataSetChanged();
+                            mRequestQueue0.add(stringRequest2);
+                        } catch(Exception e) {
+                            // handle exception
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                    }
+                }
+        );
+        mRequestQueue0.add(stringRequest1);
+
+        saveButton = (Button)findViewById(R.id.buttonSave);
+        cancelButton = (Button)findViewById(R.id.buttonCancel);
+
+        TextView playerNameTextView = (TextView)findViewById(R.id.textViewPlayerName);
+        TextView playerNumberTextView = (TextView)findViewById(R.id.textViewPlayerNumber);
+
+        // TODO: name & number (or just jersey info?)
+        playerNameTextView.setText(thisPlayer.getFullName());
+        //playerNumberTextView.setText(R.string.test_player_number_name);
+        playerNumberTextView.setText("");
 
         /*for(int i = 0; i < 5; i++) {
             final TextView attributeValueView = attributeValueViews[i];
