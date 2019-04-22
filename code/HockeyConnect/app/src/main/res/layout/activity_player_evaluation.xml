@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="20dp" />
 
-        <ListView
+        <ca.hockeyconnect.hockeyconnect.NonScrollListView
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

@@ -69,8 +69,9 @@ def getEvalCrit(tryout):
 def loadGameEval(tryout, player):
     with pymssql.connect(server, user, password, database) as conn:
         with conn.cursor(as_dict=True) as cursor:
-            cursor.execute('SELECT Speed, HockeyAwareness, CompeteLevel, PuckHandling, Agility FROM SkillEvaluations WHERE TryoutID = %s AND PlayerID = %s ORDER BY Date DESC;', (tryout, player))
+            #cursor.execute('SELECT Speed, HockeyAwareness, CompeteLevel, PuckHandling, Agility FROM SkillEvaluations WHERE TryoutID = %s AND PlayerID = %s ORDER BY Date DESC;', (tryout, player))
             #cursor.execute('SELECT * FROM SkillEvaluations INNER JOIN ... WIP ... WHERE TryoutID = %s AND PlayerID = %s ORDER BY Date DESC;', (tryout, player))
+            cursor.execute('SELECT * FROM SkillEvaluations WHERE TryoutID = %s AND PlayerID = %s;', (tryout, player))
             return jsonify(cursor.fetchone())
 
 @app.route('/postGameEval', methods = ['POST'])
@@ -169,5 +170,6 @@ def downloadSkillEvals(path = None):
 
 if __name__ == '__main__':
     #app.run(debug=True) # localhost
+    app.run(host='localhost', debug=True)
     #app.run(host='192.168.0.160',debug=True)
-    app.run(host='192.168.1.74',debug=True)
+    #app.run(host='192.168.1.74',debug=True)

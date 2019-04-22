@@ -56,7 +56,7 @@ public class PlayerEvaluationActivity extends ListActivity {
         // TODO: this is copied from below - needs to be customized accordingly.
         final RequestQueue mRequestQueue0 = Volley.newRequestQueue(this);
         String url0 = String.format("%s/getEvalCrit/%s", getString(R.string.server_url), tryoutID);
-        StringRequest stringRequest = new StringRequest (Request.Method.GET, url0,
+        StringRequest stringRequest1 = new StringRequest (Request.Method.GET, url0,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -84,7 +84,7 @@ public class PlayerEvaluationActivity extends ListActivity {
                     }
                 }
         );
-        mRequestQueue0.add(stringRequest);
+        mRequestQueue0.add(stringRequest1);
 
         /*seekBars[0] = (SeekBar)findViewById(R.id.seekBar0);
         seekBars[1] = (SeekBar)findViewById(R.id.seekBar1);
@@ -132,17 +132,18 @@ public class PlayerEvaluationActivity extends ListActivity {
 
         final RequestQueue mRequestQueue1 = Volley.newRequestQueue(this);
         String url1 = String.format("%s/getGameEval/%s/%d", getString(R.string.server_url), tryoutID, thisPlayer.getID());
-        final JsonObjectRequest jsonObjectRequest1 = new JsonObjectRequest (Request.Method.GET, url1, null,
-                new Response.Listener<JSONObject>() {
+        StringRequest stringRequest2 = new StringRequest (Request.Method.GET, url1,
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(String response) {
                         // TODO: populate sliders
                         try {
-                            /*seekBars[0].setProgress(response.getInt("Speed"));
-                            seekBars[1].setProgress(response.getInt("HockeyAwareness"));
-                            seekBars[2].setProgress(response.getInt("CompeteLevel"));
-                            seekBars[3].setProgress(response.getInt("PuckHandling"));
-                            seekBars[4].setProgress(response.getInt("Agility"));*/
+                            JSONArray reader = new JSONArray(response);
+                            for(int i = 0; i  < reader.length(); i++) {
+                                JSONObject attribute = reader.getJSONObject(i);
+                                attributeList.get(i).setValue(Integer.valueOf(attribute.getString("Value")));
+                            }
+                            listAdapter.notifyDataSetChanged();
                         } catch(Exception e) {
                             // TODO: catch exception
                         }
@@ -155,7 +156,7 @@ public class PlayerEvaluationActivity extends ListActivity {
                     }
                 }
         );
-        mRequestQueue1.add(jsonObjectRequest1);
+        mRequestQueue0.add(stringRequest2); // reuse requestQueue0 so that this executes after creating attributes.
 
         /*for(int i = 0; i < 5; i++) {
             final TextView attributeValueView = attributeValueViews[i];

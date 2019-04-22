@@ -6,11 +6,13 @@ public class Attribute implements Serializable {
     private String attributeName;
     private String attributeDescription;
     private int ID;
+    private int value = 0;
 
     public Attribute(String attributeName, String attributeDescription, int ID) {
         this.attributeName = attributeName;
         this.attributeDescription = attributeDescription;
         this.ID = ID;
+        this.value = value;
     }
 
     public String getAttributeName() {
@@ -29,4 +31,12 @@ public class Attribute implements Serializable {
     public String toString() {
         return getFullName();
     }*/
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
 }
