@@ -46,10 +46,11 @@ def saveTimedEval():
             content = request.get_json()
             print(content)
             playerID = int(content.get('playerID'))
+            evaluator = content.get('evaluator')
             tryoutID = content.get('tryoutID')
             duration = content.get('duration')
             currentTime = datetime.datetime.now().strftime('%Y%m%d %H:%M:%S')
-            cursor.execute('INSERT INTO TimedEvaluations(PlayerID, TryoutID, Duration, Date) VALUES (%d, %d, %d, %s);', (playerID, tryoutID, duration, currentTime))
+            cursor.execute('INSERT INTO TimedEvaluations(PlayerID, Evaluator, TryoutID, Duration, Date) VALUES (%d, %s, %d, %d, %s);', (playerID, evaluator, tryoutID, duration, currentTime))
             conn.commit()
             return jsonify({'Success' : 1})
 
@@ -65,23 +66,21 @@ def getEvalCrit(tryout):
                 row = cursor.fetchone()
             return jsonify(rows)
 
-#TODO: add evaluator
-@app.route('/getGameEval/<tryout>/<player>')
-def loadGameEval(tryout, player):
+@app.route('/getGameEval/<tryout>/<evaluator>/<player>')
+def loadGameEval(tryout, evaluator, player):
     with pymssql.connect(server, user, password, database) as conn:
         with conn.cursor(as_dict=True) as cursor:
             #cursor.execute('SELECT Speed, HockeyAwareness, CompeteLevel, PuckHandling, Agility FROM SkillEvaluations WHERE TryoutID = %s AND PlayerID = %s ORDER BY Date DESC;', (tryout, player))
             #cursor.execute('SELECT * FROM SkillEvaluations INNER JOIN ... WIP ... WHERE TryoutID = %s AND PlayerID = %s ORDER BY Date DESC;', (tryout, player))
             #cursor.execute('SELECT * FROM SkillEvaluations WHERE TryoutID = %s AND PlayerID = %s;', (tryout, player))
-            cursor.execute('SELECT a.* FROM SkillEvaluations a INNER JOIN (SELECT CriteriaID, MAX(Date) Date FROM SkillEvaluations GROUP BY CriteriaID) b ON a.CriteriaID = b.CriteriaID AND a.Date = b.Date WHERE a.TryoutID = %s AND a.PlayerID = %s;', (tryout, player))
+            cursor.execute('SELECT a.* FROM SkillEvaluations a INNER JOIN (SELECT CriteriaID, MAX(Date) Date FROM SkillEvaluations GROUP BY CriteriaID) b ON a.CriteriaID = b.CriteriaID AND a.Date = b.Date WHERE a.TryoutID = %s AND a.Evaluator = %s AND a.PlayerID = %s;', (tryout, evaluator, player))
             return jsonify(cursor.fetchall())
 
-# TODO: add evaluator
-@app.route('/getTimedEval/<tryout>/<player>')
-def loadTimedEval(tryout, player):
+@app.route('/getTimedEval/<tryout>/<evaluator>/<player>')
+def loadTimedEval(tryout, evaluator, player):
     with pymssql.connect(server, user, password, database) as conn:
         with conn.cursor(as_dict=True) as cursor:
-            cursor.execute('SELECT Duration FROM TimedEvaluations WHERE TryoutID = %s AND PlayerID = %s ORDER BY Date DESC;', (tryout, player))
+            cursor.execute('SELECT Duration FROM TimedEvaluations WHERE TryoutID = %s AND Evaluator = %s AND PlayerID = %s ORDER BY Date DESC;', (tryout, evaluator, player))
             return jsonify(cursor.fetchone())
 
 @app.route('/postGameEval', methods = ['POST'])

@@ -55,7 +55,7 @@ public class PlayerEvaluationActivity extends ListActivity {
 
         // setup/declared first but is added to queue on result of following request.
         // TODO: getGameEval SHOULD get the gameEval for the current evaluator.
-        String url1 = String.format("%s/getGameEval/%s/%d", getString(R.string.server_url), tryoutID, thisPlayer.getID());
+        String url1 = String.format("%s/getGameEval/%s/%s/%d", getString(R.string.server_url), tryoutID, evaluatorID, thisPlayer.getID());
         final StringRequest stringRequest2 = new StringRequest (Request.Method.GET, url1,
                 new Response.Listener<String>() {
                     @Override

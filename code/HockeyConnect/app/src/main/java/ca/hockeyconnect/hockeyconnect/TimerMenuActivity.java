@@ -47,38 +47,6 @@ public class TimerMenuActivity extends AppCompatActivity {
         final String evaluatorID = getIntent().getStringExtra("EVALUATOR_ID");
         final String tryoutID = getIntent().getStringExtra("TRYOUT_ID");
 
-
-
-
-
-
-        /*final RequestQueue mRequestQueue = Volley.newRequestQueue(this);
-        String url = "http://192.168.0.160:5000/timedEval";
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("playerID", getIntent().getStringExtra("PLAYER"));
-        params.put("tryoutID", getIntent().getStringExtra("TRYOUT_ID"));
-        // TODO: ignore zero values
-        long shortestTime = timerMillisecondValue1 < timerMillisecondValue2 ? timerMillisecondValue1 : timerMillisecondValue2; //choose lowest
-        params.put("duration", Long.toString(shortestTime));
-        JSONObject jsonObject = new JSONObject(params);
-
-        final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
-
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.d("JSONResponse", response.toString());
-                String reader = response.toString();
-                finish();
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "Saving Failed", Toast.LENGTH_LONG).show();
-            }
-        });*/
-
         timerTextView1 = (TextView)findViewById(R.id.timerTextView1);
         timerTextView2 = (TextView)findViewById(R.id.timerTextView2);
         timeTextView = findViewById(R.id.timeTextView);
@@ -122,8 +90,10 @@ public class TimerMenuActivity extends AppCompatActivity {
                 final RequestQueue mRequestQueue = Volley.newRequestQueue(currentContext);
                 String url = String.format("%s/timedEval", getString(R.string.server_url));
                 Map<String, String> params = new HashMap<String, String>();
+                // TODO: the intent extras are already saved in global variables
                 Player thisPlayer = (Player)getIntent().getSerializableExtra("PLAYER");
                 params.put("playerID", Integer.toString(thisPlayer.getID()));
+                params.put("evaluator", getIntent().getStringExtra("EVALUATOR_ID"));
                 params.put("tryoutID", getIntent().getStringExtra("TRYOUT_ID"));
                 // TODO: ignore zero values
                 long shortestTime = timerMillisecondValue1;
@@ -157,7 +127,7 @@ public class TimerMenuActivity extends AppCompatActivity {
         // TODO: add evaluator
         // TODO: use single request queue
         final RequestQueue mRequestQueue0 = Volley.newRequestQueue(this);
-        String url0 = String.format("%s/getTimedEval/%s/%s", getString(R.string.server_url), tryoutID, playerID);
+        String url0 = String.format("%s/getTimedEval/%s/%s/%s", getString(R.string.server_url), tryoutID, evaluatorID, playerID);
         StringRequest stringRequest0 = new StringRequest (Request.Method.GET, url0,
                 new Response.Listener<String>() {
                     @Override
