@@ -9,7 +9,8 @@ import android.widget.EditText;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText editText;
+    EditText editTextEvaluator;
+    EditText editTextTryout;
     Button submitButton;
 
     @Override
@@ -17,14 +18,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        editText = (EditText) findViewById(R.id.tryoutIDEditText);
+        editTextEvaluator = (EditText) findViewById(R.id.evaluatorIDEditText);
+        editTextTryout = (EditText) findViewById(R.id.tryoutIDEditText);
         submitButton = (Button)findViewById(R.id.submitButton);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
-                intent.putExtra("TRYOUT_ID", editText.getText().toString());
+                intent.putExtra("EVALUATOR_ID", editTextEvaluator.getText().toString());
+                intent.putExtra("TRYOUT_ID", editTextTryout.getText().toString());
                 startActivity(intent);
             }
         });

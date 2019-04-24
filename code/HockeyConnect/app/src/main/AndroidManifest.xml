@@ -24,7 +24,7 @@
         <activity android:name=".PlayerListActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".TimerMenuActivity" />
-        <activity android:name=".JerseySelectionActivity"></activity>
+        <activity android:name=".JerseySelectionActivity" />
     </application>
 
 </manifest>

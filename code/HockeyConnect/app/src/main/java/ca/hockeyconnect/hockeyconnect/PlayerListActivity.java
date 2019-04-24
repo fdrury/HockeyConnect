@@ -41,7 +41,7 @@ public class PlayerListActivity extends ListActivity {
 
         RequestQueue mRequestQueue = Volley.newRequestQueue(this);
 
-        String url = "http://192.168.0.160:5000/tryout/" + tryoutID;
+        String url = String.format("%s/tryout/%s", getString(R.string.server_url), tryoutID);
 
         swipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
@@ -101,6 +101,7 @@ public class PlayerListActivity extends ListActivity {
         }
         Intent intent = new Intent(PlayerListActivity.this, nextClass);
         intent.putExtra("PLAYER", PlayerList.get(position));
+        intent.putExtra("EVALUATOR_ID", getIntent().getStringExtra("EVALUATOR_ID"));
         intent.putExtra("TRYOUT_ID", getIntent().getStringExtra("TRYOUT_ID"));
         startActivity(intent);
     }

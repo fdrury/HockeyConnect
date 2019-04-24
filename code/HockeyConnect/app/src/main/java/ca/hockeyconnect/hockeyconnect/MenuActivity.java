@@ -22,6 +22,7 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, PlayerListActivity.class);
                 intent.putExtra("EVALUATION_TYPE", "JERSEY");
+                intent.putExtra("EVALUATOR_ID", getIntent().getStringExtra("EVALUATOR_ID"));
                 intent.putExtra("TRYOUT_ID", getIntent().getStringExtra("TRYOUT_ID"));
                 startActivity(intent);
             }
@@ -32,6 +33,7 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, PlayerListActivity.class);
                 intent.putExtra("EVALUATION_TYPE", "TIMED");
+                intent.putExtra("EVALUATOR_ID", getIntent().getStringExtra("EVALUATOR_ID"));
                 intent.putExtra("TRYOUT_ID", getIntent().getStringExtra("TRYOUT_ID"));
                 startActivity(intent);
             }
@@ -42,6 +44,7 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, PlayerListActivity.class);
                 intent.putExtra("EVALUATION_TYPE", "GAME");
+                intent.putExtra("EVALUATOR_ID", getIntent().getStringExtra("EVALUATOR_ID"));
                 intent.putExtra("TRYOUT_ID", getIntent().getStringExtra("TRYOUT_ID"));
                 startActivity(intent);
             }

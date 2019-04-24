@@ -53,12 +53,27 @@ def saveTimedEval():
             conn.commit()
             return jsonify({'Success' : 1})
 
+@app.route('/getEvalCrit/<tryout>')
+def getEvalCrit(tryout):
+    with pymssql.connect(server, user, password, database) as conn:
+        with conn.cursor(as_dict=True) as cursor:
+            cursor.execute('SELECT Criteria.Name, Criteria.Description, Criteria.ID FROM Criteria INNER JOIN TryoutCriteria ON Criteria.ID=TryoutCriteria.CriteriaID AND TryoutCriteria.TryoutID = %s;', tryout)
+            row = cursor.fetchone()
+            rows = []
+            while row:
+                rows.append(row)
+                row = cursor.fetchone()
+            return jsonify(rows)
+
 @app.route('/getGameEval/<tryout>/<player>')
 def loadGameEval(tryout, player):
     with pymssql.connect(server, user, password, database) as conn:
         with conn.cursor(as_dict=True) as cursor:
-            cursor.execute('SELECT Speed, HockeyAwareness, CompeteLevel, PuckHandling, Agility FROM SkillEvaluations WHERE TryoutID = %s AND PlayerID = %s ORDER BY Date DESC;', (tryout, player))
-            return jsonify(cursor.fetchone())
+            #cursor.execute('SELECT Speed, HockeyAwareness, CompeteLevel, PuckHandling, Agility FROM SkillEvaluations WHERE TryoutID = %s AND PlayerID = %s ORDER BY Date DESC;', (tryout, player))
+            #cursor.execute('SELECT * FROM SkillEvaluations INNER JOIN ... WIP ... WHERE TryoutID = %s AND PlayerID = %s ORDER BY Date DESC;', (tryout, player))
+            #cursor.execute('SELECT * FROM SkillEvaluations WHERE TryoutID = %s AND PlayerID = %s;', (tryout, player))
+            cursor.execute('SELECT a.* FROM SkillEvaluations a INNER JOIN (SELECT CriteriaID, MAX(Date) Date FROM SkillEvaluations GROUP BY CriteriaID) b ON a.CriteriaID = b.CriteriaID AND a.Date = b.Date WHERE a.TryoutID = %s AND a.PlayerID = %s;', (tryout, player))
+            return jsonify(cursor.fetchall())
 
 @app.route('/postGameEval', methods = ['POST'])
 def saveGameEval():
@@ -69,13 +84,18 @@ def saveGameEval():
             print(content)
             playerID = int(content.get('playerID'))
             tryoutID = content.get('tryoutID')
-            speed = int(content.get('speed'))
-            hockeyAwareness = int(content.get('hockeyAwareness'))
-            competeLevel = int(content.get('competeLevel'))
-            puckHandling = int(content.get('puckHandling'))
-            agility = int(content.get('agility'))
+            evaluatorID = content.get('evaluatorID')
             currentTime = datetime.datetime.now().strftime('%Y%m%d %H:%M:%S')
-            cursor.execute('INSERT INTO SkillEvaluations(PlayerID, TryoutID, Speed, HockeyAwareness, CompeteLevel, PuckHandling, Agility, Date) VALUES (%d, %d, %d, %d, %d, %d, %d, %s);', (playerID, tryoutID, speed, hockeyAwareness, competeLevel, puckHandling, agility, currentTime))
+            cursor.execute('SELECT CriteriaID FROM TryoutCriteria WHERE TryoutID = %s', (tryoutID))
+            rows = cursor.fetchall()
+            for row in rows:
+                #print(row.get('CriteriaID'))
+                #criteriaID = ('criteria%s', row.keys()[0])
+                #criteriaID = ('criteria%s', row.get('CriteriaID')])
+                criteriaID = row.get('CriteriaID')
+                value = content.get(str(criteriaID))
+                #cursor.execute('INSERT INTO SkillEvaluations(PlayerID, TryoutID, EvaluatorID, CriteriaID, Value, Date) VALUES (%d, %d, %d, %d, %d, %s);', (playerID, tryoutID, evaluatorID, criteriaID, value, currentTime))
+                cursor.execute('INSERT INTO SkillEvaluations(PlayerID, TryoutID, Evaluator, CriteriaID, Value, Date) VALUES (%d, %d, %d, %d, %d, %s);', (playerID, tryoutID, evaluatorID, criteriaID, value, currentTime))
             conn.commit()
             return jsonify({'Success' : 1})
 
@@ -154,4 +174,6 @@ def downloadSkillEvals(path = None):
 
 if __name__ == '__main__':
     #app.run(debug=True) # localhost
-    app.run(host='192.168.0.160',debug=True)
+    app.run(host='localhost', debug=True)
+    #app.run(host='192.168.0.160',debug=True)
+    #app.run(host='192.168.1.74',debug=True)
