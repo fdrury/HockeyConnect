@@ -65,6 +65,7 @@ def getEvalCrit(tryout):
                 row = cursor.fetchone()
             return jsonify(rows)
 
+#TODO: add evaluator
 @app.route('/getGameEval/<tryout>/<player>')
 def loadGameEval(tryout, player):
     with pymssql.connect(server, user, password, database) as conn:
@@ -74,6 +75,14 @@ def loadGameEval(tryout, player):
             #cursor.execute('SELECT * FROM SkillEvaluations WHERE TryoutID = %s AND PlayerID = %s;', (tryout, player))
             cursor.execute('SELECT a.* FROM SkillEvaluations a INNER JOIN (SELECT CriteriaID, MAX(Date) Date FROM SkillEvaluations GROUP BY CriteriaID) b ON a.CriteriaID = b.CriteriaID AND a.Date = b.Date WHERE a.TryoutID = %s AND a.PlayerID = %s;', (tryout, player))
             return jsonify(cursor.fetchall())
+
+# TODO: add evaluator
+@app.route('/getTimedEval/<tryout>/<player>')
+def loadTimedEval(tryout, player):
+    with pymssql.connect(server, user, password, database) as conn:
+        with conn.cursor(as_dict=True) as cursor:
+            cursor.execute('SELECT Duration FROM TimedEvaluations WHERE TryoutID = %s AND PlayerID = %s ORDER BY Date DESC;', (tryout, player))
+            return jsonify(cursor.fetchone())
 
 @app.route('/postGameEval', methods = ['POST'])
 def saveGameEval():

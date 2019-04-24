@@ -82,7 +82,6 @@ public class PlayerEvaluationActivity extends ListActivity {
                 }
         );
 
-        // TODO: this is copied from below - needs to be customized accordingly.
         // TODO: only use one RequestQueue
         final RequestQueue mRequestQueue0 = Volley.newRequestQueue(this);
         String url0 = String.format("%s/getEvalCrit/%s", getString(R.string.server_url), tryoutID);
@@ -94,12 +93,7 @@ public class PlayerEvaluationActivity extends ListActivity {
                             JSONArray reader = new JSONArray(response);
                             for(int i = 0; i  < reader.length(); i++) {
                                 JSONObject attribute = reader.getJSONObject(i);
-                                // TODO: the following line is causing crashes but will eventually need to exist
                                 attributeList.add(new Attribute(attribute.getString("Name"), attribute.getString("Description"), attribute.getInt("ID")));
-                                // TODO: but the following line works
-                                //Attribute testAttr = new Attribute(attribute.getString("Name"), attribute.getString("Description"), attribute.getInt("ID"));
-                                // TODO: the following line also crashes
-                                //attributeList.add(null);
                             }
                             listAdapter.notifyDataSetChanged();
                             mRequestQueue0.add(stringRequest2);

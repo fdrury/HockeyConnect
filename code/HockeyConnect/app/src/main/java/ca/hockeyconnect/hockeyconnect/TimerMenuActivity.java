@@ -14,8 +14,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -25,11 +27,13 @@ public class TimerMenuActivity extends AppCompatActivity {
 
     TextView timerTextView1;
     TextView timerTextView2;
+    TextView timeTextView;
     Button saveButton;
     Button cancelButton;
     int timerActivityRequestCode1 = 1000;
     int timerActivityRequestCode2 = 1001;
     static final String timerValueRequestCode = "timer_value";
+    long timerMillisecondValue = 0;
     long timerMillisecondValue1 = 0;
     long timerMillisecondValue2 = 0;
 
@@ -37,6 +41,14 @@ public class TimerMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer_menu);
+
+        final Player thisPlayer = (Player)getIntent().getSerializableExtra("PLAYER");
+        final String playerID = String.valueOf(thisPlayer.getID());
+        final String evaluatorID = getIntent().getStringExtra("EVALUATOR_ID");
+        final String tryoutID = getIntent().getStringExtra("TRYOUT_ID");
+
+
+
 
 
 
@@ -69,6 +81,7 @@ public class TimerMenuActivity extends AppCompatActivity {
 
         timerTextView1 = (TextView)findViewById(R.id.timerTextView1);
         timerTextView2 = (TextView)findViewById(R.id.timerTextView2);
+        timeTextView = findViewById(R.id.timeTextView);
 
         Button timerButton1 = (Button)findViewById(R.id.timerButton1);
         Button timerButton2 = (Button)findViewById(R.id.timerButton2);
@@ -97,6 +110,15 @@ public class TimerMenuActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(timerMillisecondValue != 0 && timerMillisecondValue < timerMillisecondValue1 && timerMillisecondValue < timerMillisecondValue2) {
+                    finish();
+                    return;
+                }
+                if(timerMillisecondValue1 == 0 && timerMillisecondValue2 == 0) {
+                    finish();
+                    return;
+                }
+
                 final RequestQueue mRequestQueue = Volley.newRequestQueue(currentContext);
                 String url = String.format("%s/timedEval", getString(R.string.server_url));
                 Map<String, String> params = new HashMap<String, String>();
@@ -104,7 +126,11 @@ public class TimerMenuActivity extends AppCompatActivity {
                 params.put("playerID", Integer.toString(thisPlayer.getID()));
                 params.put("tryoutID", getIntent().getStringExtra("TRYOUT_ID"));
                 // TODO: ignore zero values
-                long shortestTime = timerMillisecondValue1 < timerMillisecondValue2 ? timerMillisecondValue1 : timerMillisecondValue2; //choose lowest
+                long shortestTime = timerMillisecondValue1;
+                //choose lowest
+                if(timerMillisecondValue1 == 0 || (timerMillisecondValue1 > timerMillisecondValue2 && timerMillisecondValue2 != 0)) {
+                    shortestTime = timerMillisecondValue2;
+                }
                 params.put("duration", Long.toString(shortestTime));
                 JSONObject jsonObject = new JSONObject(params);
 
@@ -113,6 +139,7 @@ public class TimerMenuActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             finish();
+                            return;
                         }
                     },
                     new Response.ErrorListener() {
@@ -125,6 +152,42 @@ public class TimerMenuActivity extends AppCompatActivity {
                 mRequestQueue.add(jsonObjectRequest);
             }
         });
+
+        // TODO: add ability to override value
+        // TODO: add evaluator
+        // TODO: use single request queue
+        final RequestQueue mRequestQueue0 = Volley.newRequestQueue(this);
+        String url0 = String.format("%s/getTimedEval/%s/%s", getString(R.string.server_url), tryoutID, playerID);
+        StringRequest stringRequest0 = new StringRequest (Request.Method.GET, url0,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject reader = new JSONObject(response);
+                            timerMillisecondValue = reader.getInt("Duration");
+
+                            int minutes = (int)(timerMillisecondValue / 1000 / 60);
+                            int seconds = (int)(timerMillisecondValue / 1000 % 60);
+                            int milliSeconds = (int)(timerMillisecondValue % 1000);
+
+                            timeTextView.setText("" + minutes + ":"
+                                    + String.format("%02d", seconds) + ":"
+                                    + String.format("%03d", milliSeconds));
+
+                            //timeTextView.setText(String.valueOf(reader.getInt("Duration")));
+                        } catch(Exception e) {
+                            // handle exception
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                    }
+                }
+        );
+        mRequestQueue0.add(stringRequest0);
     }
 
     @Override
