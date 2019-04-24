@@ -53,8 +53,8 @@ public class PlayerEvaluationActivity extends ListActivity {
         final String evaluatorID = getIntent().getStringExtra("EVALUATOR_ID");
         final String tryoutID = getIntent().getStringExtra("TRYOUT_ID");
 
-        // setup first but is added to queue on result of following request.
-        final RequestQueue mRequestQueue1 = Volley.newRequestQueue(this);
+        // setup/declared first but is added to queue on result of following request.
+        // TODO: getGameEval SHOULD get the gameEval for the current evaluator.
         String url1 = String.format("%s/getGameEval/%s/%d", getString(R.string.server_url), tryoutID, thisPlayer.getID());
         final StringRequest stringRequest2 = new StringRequest (Request.Method.GET, url1,
                 new Response.Listener<String>() {
@@ -65,6 +65,7 @@ public class PlayerEvaluationActivity extends ListActivity {
                             JSONArray reader = new JSONArray(response);
                             for(int i = 0; i  < reader.length(); i++) {
                                 JSONObject attribute = reader.getJSONObject(i);
+                                // TODO: this assumes indexing/ordering is correct - is this a safe assumption?
                                 attributeList.get(i).setValue(Integer.valueOf(attribute.getString("Value")));
                             }
                             listAdapter.notifyDataSetChanged();
@@ -176,7 +177,13 @@ public class PlayerEvaluationActivity extends ListActivity {
                 params2.put("playerID", Integer.toString(thisPlayer.getID()));
                 params2.put("evaluatorID", evaluatorID);
                 params2.put("tryoutID", tryoutID);
-                // TODO: ignore zero values
+
+                // TODO: add params
+                for(int i = 0; i < attributeList.size(); i++) {
+                    //params2.put(String.valueOf(attributeList.get(i).getID()), String.valueOf(attributeList.get(i).getValue()));
+                    params2.put(String.valueOf(attributeList.get(i).getID()), String.valueOf(attributeList.get(i).getValue()));
+                }
+
                 /*params2.put("speed", Integer.toString(attributeValues[0]));
                 params2.put("hockeyAwareness", Integer.toString(attributeValues[1]));
                 params2.put("competeLevel", Integer.toString(attributeValues[2]));

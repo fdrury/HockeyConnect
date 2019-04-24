@@ -72,7 +72,7 @@ def loadGameEval(tryout, player):
             #cursor.execute('SELECT Speed, HockeyAwareness, CompeteLevel, PuckHandling, Agility FROM SkillEvaluations WHERE TryoutID = %s AND PlayerID = %s ORDER BY Date DESC;', (tryout, player))
             #cursor.execute('SELECT * FROM SkillEvaluations INNER JOIN ... WIP ... WHERE TryoutID = %s AND PlayerID = %s ORDER BY Date DESC;', (tryout, player))
             cursor.execute('SELECT * FROM SkillEvaluations WHERE TryoutID = %s AND PlayerID = %s;', (tryout, player))
-            return jsonify(cursor.fetchone())
+            return jsonify(cursor.fetchall())
 
 @app.route('/postGameEval', methods = ['POST'])
 def saveGameEval():
@@ -85,13 +85,16 @@ def saveGameEval():
             tryoutID = content.get('tryoutID')
             evaluatorID = content.get('evaluatorID')
             currentTime = datetime.datetime.now().strftime('%Y%m%d %H:%M:%S')
-            cursor.execute('SELECT ID FROM TryoutCriteria WHERE TryoutID = %s', (tryoutID))
-            row = cursor.fetchone()
-            while row:
-                criteriaID = ('criteria%s', row.keys()[0])
-                value = int(content.get(criteriaID))
-                cursor.execute('INSERT INTO SkillEvaluations(PlayerID, TryoutID, EvaluatorID, CriteriaID, Value, Date) VALUES (%d, %d, %d, %d, %d, %s);', (playerID, tryoutID, evaluatorID, criteriaID, value, currentTime))
-                row = cursor.fetchone()
+            cursor.execute('SELECT CriteriaID FROM TryoutCriteria WHERE TryoutID = %s', (tryoutID))
+            rows = cursor.fetchall()
+            for row in rows:
+                #print(row.get('CriteriaID'))
+                #criteriaID = ('criteria%s', row.keys()[0])
+                #criteriaID = ('criteria%s', row.get('CriteriaID')])
+                criteriaID = row.get('CriteriaID')
+                value = content.get(str(criteriaID))
+                #cursor.execute('INSERT INTO SkillEvaluations(PlayerID, TryoutID, EvaluatorID, CriteriaID, Value, Date) VALUES (%d, %d, %d, %d, %d, %s);', (playerID, tryoutID, evaluatorID, criteriaID, value, currentTime))
+                cursor.execute('INSERT INTO SkillEvaluations(PlayerID, TryoutID, Evaluator, CriteriaID, Value, Date) VALUES (%d, %d, %d, %d, %d, %s);', (playerID, tryoutID, evaluatorID, criteriaID, value, currentTime))
             conn.commit()
             return jsonify({'Success' : 1})
 
