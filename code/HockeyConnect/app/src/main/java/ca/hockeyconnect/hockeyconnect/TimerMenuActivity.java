@@ -33,6 +33,7 @@ public class TimerMenuActivity extends AppCompatActivity {
     int timerActivityRequestCode1 = 1000;
     int timerActivityRequestCode2 = 1001;
     static final String timerValueRequestCode = "timer_value";
+    long timerMillisecondValue = 0;
     long timerMillisecondValue1 = 0;
     long timerMillisecondValue2 = 0;
 
@@ -109,6 +110,15 @@ public class TimerMenuActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(timerMillisecondValue != 0 && timerMillisecondValue < timerMillisecondValue1 && timerMillisecondValue < timerMillisecondValue2) {
+                    finish();
+                    return;
+                }
+                if(timerMillisecondValue1 == 0 && timerMillisecondValue2 == 0) {
+                    finish();
+                    return;
+                }
+
                 final RequestQueue mRequestQueue = Volley.newRequestQueue(currentContext);
                 String url = String.format("%s/timedEval", getString(R.string.server_url));
                 Map<String, String> params = new HashMap<String, String>();
@@ -116,7 +126,11 @@ public class TimerMenuActivity extends AppCompatActivity {
                 params.put("playerID", Integer.toString(thisPlayer.getID()));
                 params.put("tryoutID", getIntent().getStringExtra("TRYOUT_ID"));
                 // TODO: ignore zero values
-                long shortestTime = timerMillisecondValue1 < timerMillisecondValue2 ? timerMillisecondValue1 : timerMillisecondValue2; //choose lowest
+                long shortestTime = timerMillisecondValue1;
+                //choose lowest
+                if(timerMillisecondValue1 == 0 || (timerMillisecondValue1 > timerMillisecondValue2 && timerMillisecondValue2 != 0)) {
+                    shortestTime = timerMillisecondValue2;
+                }
                 params.put("duration", Long.toString(shortestTime));
                 JSONObject jsonObject = new JSONObject(params);
 
@@ -125,6 +139,7 @@ public class TimerMenuActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             finish();
+                            return;
                         }
                     },
                     new Response.ErrorListener() {
@@ -148,14 +163,18 @@ public class TimerMenuActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            JSONArray reader = new JSONArray(response);
-                            System.out.println("testing123");
-                            if(reader.length() != 0) {
-                                JSONObject jsonObject = reader.getJSONObject(0);
-                                System.out.print("Duration: ");
-                                System.out.println(jsonObject.getString("Duration"));
-                                timeTextView.setText(jsonObject.getString("Duration"));
-                            }
+                            JSONObject reader = new JSONObject(response);
+                            timerMillisecondValue = reader.getInt("Duration");
+
+                            int minutes = (int)(timerMillisecondValue / 1000 / 60);
+                            int seconds = (int)(timerMillisecondValue / 1000 % 60);
+                            int milliSeconds = (int)(timerMillisecondValue % 1000);
+
+                            timeTextView.setText("" + minutes + ":"
+                                    + String.format("%02d", seconds) + ":"
+                                    + String.format("%03d", milliSeconds));
+
+                            //timeTextView.setText(String.valueOf(reader.getInt("Duration")));
                         } catch(Exception e) {
                             // handle exception
                         }

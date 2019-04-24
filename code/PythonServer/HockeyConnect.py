@@ -81,7 +81,7 @@ def loadGameEval(tryout, player):
 def loadTimedEval(tryout, player):
     with pymssql.connect(server, user, password, database) as conn:
         with conn.cursor(as_dict=True) as cursor:
-            cursor.execute('SELECT Duration FROM TimedEvaluations WHERE PlayerID = %s AND TryoutID = %s ORDER BY Date DESC;', (tryout, player))
+            cursor.execute('SELECT Duration FROM TimedEvaluations WHERE TryoutID = %s AND PlayerID = %s ORDER BY Date DESC;', (tryout, player))
             return jsonify(cursor.fetchone())
 
 @app.route('/postGameEval', methods = ['POST'])
