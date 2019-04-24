@@ -14,8 +14,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -25,6 +27,7 @@ public class TimerMenuActivity extends AppCompatActivity {
 
     TextView timerTextView1;
     TextView timerTextView2;
+    TextView timeTextView;
     Button saveButton;
     Button cancelButton;
     int timerActivityRequestCode1 = 1000;
@@ -37,6 +40,14 @@ public class TimerMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer_menu);
+
+        final Player thisPlayer = (Player)getIntent().getSerializableExtra("PLAYER");
+        final String playerID = String.valueOf(thisPlayer.getID());
+        final String evaluatorID = getIntent().getStringExtra("EVALUATOR_ID");
+        final String tryoutID = getIntent().getStringExtra("TRYOUT_ID");
+
+
+
 
 
 
@@ -69,6 +80,7 @@ public class TimerMenuActivity extends AppCompatActivity {
 
         timerTextView1 = (TextView)findViewById(R.id.timerTextView1);
         timerTextView2 = (TextView)findViewById(R.id.timerTextView2);
+        timeTextView = findViewById(R.id.timeTextView);
 
         Button timerButton1 = (Button)findViewById(R.id.timerButton1);
         Button timerButton2 = (Button)findViewById(R.id.timerButton2);
@@ -125,6 +137,38 @@ public class TimerMenuActivity extends AppCompatActivity {
                 mRequestQueue.add(jsonObjectRequest);
             }
         });
+
+        // TODO: add ability to override value
+        // TODO: add evaluator
+        // TODO: use single request queue
+        final RequestQueue mRequestQueue0 = Volley.newRequestQueue(this);
+        String url0 = String.format("%s/getTimedEval/%s/%s", getString(R.string.server_url), tryoutID, playerID);
+        StringRequest stringRequest0 = new StringRequest (Request.Method.GET, url0,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray reader = new JSONArray(response);
+                            System.out.println("testing123");
+                            if(reader.length() != 0) {
+                                JSONObject jsonObject = reader.getJSONObject(0);
+                                System.out.print("Duration: ");
+                                System.out.println(jsonObject.getString("Duration"));
+                                timeTextView.setText(jsonObject.getString("Duration"));
+                            }
+                        } catch(Exception e) {
+                            // handle exception
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                    }
+                }
+        );
+        mRequestQueue0.add(stringRequest0);
     }
 
     @Override
