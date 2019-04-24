@@ -95,7 +95,6 @@ public class TimerMenuActivity extends AppCompatActivity {
                 params.put("playerID", Integer.toString(thisPlayer.getID()));
                 params.put("evaluator", getIntent().getStringExtra("EVALUATOR_ID"));
                 params.put("tryoutID", getIntent().getStringExtra("TRYOUT_ID"));
-                // TODO: ignore zero values
                 long shortestTime = timerMillisecondValue1;
                 //choose lowest
                 if(timerMillisecondValue1 == 0 || (timerMillisecondValue1 > timerMillisecondValue2 && timerMillisecondValue2 != 0)) {
@@ -123,8 +122,6 @@ public class TimerMenuActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: add ability to override value
-        // TODO: add evaluator
         // TODO: use single request queue
         final RequestQueue mRequestQueue0 = Volley.newRequestQueue(this);
         String url0 = String.format("%s/getTimedEval/%s/%s/%s", getString(R.string.server_url), tryoutID, evaluatorID, playerID);
@@ -143,8 +140,6 @@ public class TimerMenuActivity extends AppCompatActivity {
                             timeTextView.setText("" + minutes + ":"
                                     + String.format("%02d", seconds) + ":"
                                     + String.format("%03d", milliSeconds));
-
-                            //timeTextView.setText(String.valueOf(reader.getInt("Duration")));
                         } catch(Exception e) {
                             // handle exception
                         }

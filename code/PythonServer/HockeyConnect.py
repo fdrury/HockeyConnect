@@ -70,9 +70,6 @@ def getEvalCrit(tryout):
 def loadGameEval(tryout, evaluator, player):
     with pymssql.connect(server, user, password, database) as conn:
         with conn.cursor(as_dict=True) as cursor:
-            #cursor.execute('SELECT Speed, HockeyAwareness, CompeteLevel, PuckHandling, Agility FROM SkillEvaluations WHERE TryoutID = %s AND PlayerID = %s ORDER BY Date DESC;', (tryout, player))
-            #cursor.execute('SELECT * FROM SkillEvaluations INNER JOIN ... WIP ... WHERE TryoutID = %s AND PlayerID = %s ORDER BY Date DESC;', (tryout, player))
-            #cursor.execute('SELECT * FROM SkillEvaluations WHERE TryoutID = %s AND PlayerID = %s;', (tryout, player))
             cursor.execute('SELECT a.* FROM SkillEvaluations a INNER JOIN (SELECT CriteriaID, MAX(Date) Date FROM SkillEvaluations GROUP BY CriteriaID) b ON a.CriteriaID = b.CriteriaID AND a.Date = b.Date WHERE a.TryoutID = %s AND a.Evaluator = %s AND a.PlayerID = %s;', (tryout, evaluator, player))
             return jsonify(cursor.fetchall())
 
@@ -97,12 +94,8 @@ def saveGameEval():
             cursor.execute('SELECT CriteriaID FROM TryoutCriteria WHERE TryoutID = %s', (tryoutID))
             rows = cursor.fetchall()
             for row in rows:
-                #print(row.get('CriteriaID'))
-                #criteriaID = ('criteria%s', row.keys()[0])
-                #criteriaID = ('criteria%s', row.get('CriteriaID')])
                 criteriaID = row.get('CriteriaID')
                 value = content.get(str(criteriaID))
-                #cursor.execute('INSERT INTO SkillEvaluations(PlayerID, TryoutID, EvaluatorID, CriteriaID, Value, Date) VALUES (%d, %d, %d, %d, %d, %s);', (playerID, tryoutID, evaluatorID, criteriaID, value, currentTime))
                 cursor.execute('INSERT INTO SkillEvaluations(PlayerID, TryoutID, Evaluator, CriteriaID, Value, Date) VALUES (%d, %d, %d, %d, %d, %s);', (playerID, tryoutID, evaluatorID, criteriaID, value, currentTime))
             conn.commit()
             return jsonify({'Success' : 1})
@@ -117,7 +110,6 @@ def uploadPlayers():
             f = request.files['csvfile']
             if not f:
                 return 'No file'
-            #fileContents = f.stream.read().decode('utf-8')
             fileContents = io.StringIO(f.stream.read().decode('utf-8'), newline=None)
             
             cursor.execute('SELECT ID FROM Tryouts ORDER BY ID DESC')
@@ -181,7 +173,7 @@ def downloadSkillEvals(path = None):
 
 
 if __name__ == '__main__':
-    #app.run(debug=True) # localhost
-    app.run(host='localhost', debug=True)
+    #app.run(debug=True) # 127.0.0.1
+    app.run(host='localhost', debug=True) # this works better without known IP? Use for testing.
     #app.run(host='192.168.0.160',debug=True)
     #app.run(host='192.168.1.74',debug=True)

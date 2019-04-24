@@ -89,35 +89,6 @@ public class AttributeAdapter extends ArrayAdapter<Attribute> {
         return convertView;
     }
 
-    /*public void addAndSet(Attribute attribute, int tryoutID, int playerID) {
-        final Attribute localAttribute = attribute;
-        final Context context = getContext();
-
-        final RequestQueue mRequestQueue1 = Volley.newRequestQueue(getContext());
-        String url1 = String.format("%s/getGameEval/%s/%d", getContext().getResources().getString(R.string.server_url), tryoutID, playerID);
-        final JsonObjectRequest jsonObjectRequest1 = new JsonObjectRequest (Request.Method.GET, url1, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // TODO: populate sliders
-                        try {
-                            localAttribute.setValue(response.getInt("Value"));
-                            context.super.add(localAttribute);
-                        } catch(Exception e) {
-                            // TODO: catch exception
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO: does anything need to be done here?
-                    }
-                }
-        );
-        mRequestQueue1.add(jsonObjectRequest1);
-    }*/
-
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();

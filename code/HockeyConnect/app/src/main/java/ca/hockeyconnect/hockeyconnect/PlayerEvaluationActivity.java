@@ -31,12 +31,8 @@ import java.util.Map;
 
 public class PlayerEvaluationActivity extends ListActivity {
 
-    //ArrayList<SeekBar> seekBars = new ArrayList<SeekBar>();
-    //ArrayList<ImageButton> helpButtons = new ArrayList<ImageButton>();
     Button saveButton;
     Button cancelButton;
-    //ArrayList<String> helpStrings = new ArrayList<String>();
-    //ArrayList<Integer> attributeValues = new ArrayList<Integer>();
 
     ArrayList<Attribute> attributeList = new ArrayList<Attribute>();
     AttributeAdapter listAdapter;
@@ -54,7 +50,6 @@ public class PlayerEvaluationActivity extends ListActivity {
         final String tryoutID = getIntent().getStringExtra("TRYOUT_ID");
 
         // setup/declared first but is added to queue on result of following request.
-        // TODO: getGameEval SHOULD get the gameEval for the current evaluator.
         String url1 = String.format("%s/getGameEval/%s/%s/%d", getString(R.string.server_url), tryoutID, evaluatorID, thisPlayer.getID());
         final StringRequest stringRequest2 = new StringRequest (Request.Method.GET, url1,
                 new Response.Listener<String>() {
@@ -122,38 +117,6 @@ public class PlayerEvaluationActivity extends ListActivity {
         //playerNumberTextView.setText(R.string.test_player_number_name);
         playerNumberTextView.setText("");
 
-        /*for(int i = 0; i < 5; i++) {
-            final TextView attributeValueView = attributeValueViews[i];
-            final int index = i;
-            seekBars[i].setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    attributeValues[index] = progress;
-                    if (progress == 0)
-                        attributeValueView.setText(R.string.not_rated_name);
-                    else
-                        attributeValueView.setText(Integer.toString(progress));
-                }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-
-                }
-
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-
-                }
-            });
-
-            helpButtons[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), helpStrings[index], Toast.LENGTH_LONG).show();
-                }
-            });
-        }*/
-
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,17 +135,11 @@ public class PlayerEvaluationActivity extends ListActivity {
                 params2.put("evaluatorID", evaluatorID);
                 params2.put("tryoutID", tryoutID);
 
-                // TODO: add params
                 for(int i = 0; i < attributeList.size(); i++) {
                     //params2.put(String.valueOf(attributeList.get(i).getID()), String.valueOf(attributeList.get(i).getValue()));
                     params2.put(String.valueOf(attributeList.get(i).getID()), String.valueOf(attributeList.get(i).getValue()));
                 }
 
-                /*params2.put("speed", Integer.toString(attributeValues[0]));
-                params2.put("hockeyAwareness", Integer.toString(attributeValues[1]));
-                params2.put("competeLevel", Integer.toString(attributeValues[2]));
-                params2.put("puckHandling", Integer.toString(attributeValues[3]));
-                params2.put("agility", Integer.toString(attributeValues[4]));*/
                 JSONObject jsonObject2 = new JSONObject(params2);
 
                 final JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest (Request.Method.POST, url2, jsonObject2,

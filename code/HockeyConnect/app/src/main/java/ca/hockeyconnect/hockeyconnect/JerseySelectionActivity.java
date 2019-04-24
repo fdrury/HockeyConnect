@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+// TODO: implement this mode
 public class JerseySelectionActivity extends AppCompatActivity {
 
     Button submitButton;
