@@ -160,8 +160,8 @@ def downloadTimedEvals(path = None):
             tempCSV = NamedTemporaryFile(delete=False)
             with open(templateCSV, 'w') as tempCSV:
                 #cursor.execute('SELECT * FROM Players INNER JOIN TimedEvaluations ON Players.ID=TimedEvaluations.PlayerID AND TimedEvaluations.TryoutID = %s;', path)
-                cursor.execute('SELECT a.* FROM SkillEvaluations a INNER JOIN (SELECT CriteriaID, MAX(Date) Date FROM SkillEvaluations GROUP BY CriteriaID) b ON a.CriteriaID = b.CriteriaID AND a.Date = b.Date WHERE a.TryoutID = %s AND a.Evaluator = %s AND a.PlayerID = %s;', (tryout, evaluator, player))
-                cursor.execute('SELECT * FROM Players INNER JOIN TimedEvaluations ON Players.ID=TimedEvaluations.PlayerID AND TimedEvaluations.TryoutID = %s;', path)
+                #cursor.execute('SELECT a.* FROM SkillEvaluations a INNER JOIN (SELECT CriteriaID, MAX(Date) Date FROM SkillEvaluations GROUP BY CriteriaID) b ON a.CriteriaID = b.CriteriaID AND a.Date = b.Date WHERE a.TryoutID = %s AND a.Evaluator = %s AND a.PlayerID = %s;', (tryout, evaluator, player))
+                cursor.execute('SELECT a.* FROM Players a INNER JOIN (SELECT PlayerID, TryoutID, MAX(Date) Date FROM TimedEvaluations GROUP BY PlayerID) b ON a.ID=b.PlayerID AND b.TryoutID = %s;', path)
                 row = cursor.fetchone()
                 fieldnames = row.keys()
                 writer = csv.DictWriter(tempCSV, fieldnames=fieldnames)
